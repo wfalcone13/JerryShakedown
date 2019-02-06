@@ -28,10 +28,13 @@ This game will consist of a single screen with a game board, the main title, lin
 ### Implementation Timeline
 **Day 1**:
   Plan out Canvas and Javascript work
+
 **Day 2**:
   Begin work and design
+
 **Day 3**:
   Continue work
+  
 **Day 4**:
 Style the front end
 
