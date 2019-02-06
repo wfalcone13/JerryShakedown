@@ -1,0 +1,25 @@
+{
+  "name": "javascript_game",
+  "version": "1.0.0",
+  "description": "### Background Get Jerry Through Shakedown Street is a side scroller adventure game inpired by the band, the Grateful Dead.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wfalcone13/JerryShakedown.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wfalcone13/JerryShakedown/issues"
+  },
+  "homepage": "https://github.com/wfalcone13/JerryShakedown#readme",
+  "dependencies": {
+    "webpack": "^4.29.2",
+    "webpack-cli": "^3.2.3"
+  }
+}
