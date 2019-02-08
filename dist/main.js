@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("console.log(\"Webpack is working!\")\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("document.addEventListener(\"DOMContentLoaded\", () =>{\n  let canvas = document.getElementById(\"game-canvas\")\n  let ctx = canvas.getContext('2d');\n  \n  let ballX = 600\n  let ballSpeed = -5\n\n  let rectPosY = 250\n  let spacePressed = false;\n\n  //bounce off walls\n  function bouncWall(){\n    if(ballX < 0 || ballX > canvas.width){\n      ballSpeed = -ballSpeed\n    }\n  }\n\n  document.addEventListener(\"keydown\", keyDownHander, false);\n  document.addEventListener(\"keyup\", keyUpHander, false);\n\n  function keyDownHander(e){\n    if (e.keyCode === 32){\n      spacePressed = true;\n    }\n  }\n\n  function keyUpHander(e) {\n    if (e.keyCode === 32) {\n      spacePressed = false;\n    }\n  }\n\n \n\n  \n  function draw(){\n    ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n    //ball\n    ctx.beginPath();\n    ctx.arc(ballX, 450, 5, 0, Math.PI * 2);\n    ctx.fillStyle = 'red';\n    ctx.fill();\n    ctx.closePath();\n    \n    \n    //figure\n    ctx.beginPath();\n    ctx.rect(150, rectPosY, 50, 100);\n    ctx.fillStyle = \"red\";\n    ctx.fill();\n    ctx.closePath();\n    \n    //ball moving\n    ballX+= ballSpeed\n\n \n    bouncWall();\n    \n    \n    requestAnimationFrame(draw)\n    \n   if(spacePressed && rectPosY >0){\n     rectPosY -= 5;\n   } \n\n   if(!spacePressed && rectPosY < canvas.height-100){\n     rectPosY += 7\n   }\n\n  }\n  draw()\n  \n})\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
