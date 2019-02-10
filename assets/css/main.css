@@ -3,7 +3,11 @@
   justify-content: center;
 }
 
+.img{
+  display: none;
+}
+
 #game-canvas{
   /* background-image: url('../images/background.jpg') */
-  background-color: black;
+  /* /* background-color: black; */ 
 }
