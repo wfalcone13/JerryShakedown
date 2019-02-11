@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --watch --mode=development"
+    "build": "webpack --watch --mode=development",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   },
   "homepage": "https://github.com/wfalcone13/JerryShakedown#readme",
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.3"
   }
