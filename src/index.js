@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   let backImg = new Image();
   // backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/marioclouds2.jpg';
-  backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/road.jpg';
+  backImg.src = 'assets/images/road.jpg';
 
   let cW = ctx.canvas.width;
   let cH = ctx.canvas.height;
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
 
   const jerry = new Image();
-  jerry.src ='/Users/william_falcone/Desktop/javascript_game/assets/images/jerry2.jpg';
+  jerry.src ='assets/images/jerry2.jpg';
 
 
   let score = 0;
@@ -113,14 +113,14 @@ document.addEventListener("DOMContentLoaded", () =>{
 
  
 
-  function rect(){
+  // function rect(){
  
-    ctx.beginPath();
-    ctx.rect(rectPosX, 600, 50, 100);
-    ctx.fillStyle = "transparent";
-    ctx.fill();
-    ctx.closePath();
-  }
+  //   ctx.beginPath();
+  //   ctx.rect(rectPosX, 600, 50, 100);
+  //   ctx.fillStyle = "red";
+  //   ctx.fill();
+  //   ctx.closePath();
+  // }
 
   function coin(){
     ctx.beginPath();
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     // ctx.fill();
     // ctx.closePath();
 
-    rect();
+   
 
     drawScore();
     coin();
