@@ -1,3 +1,8 @@
+body{
+  background-image: url("https://www.hypergallery.com/media/catalog/product/cache/1/signed_image/1400x/17f82f742ffe127f42dca9de82fb58b1/G/r/GratefulDead_ShakedownStreet_AlbumArtPrint_GilbertShelton_full-width.jpg");
+}
+
+
 .board{
   display: flex;
   justify-content: center;

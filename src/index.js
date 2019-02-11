@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () =>{
   let ctx = canvas.getContext('2d');
 
   let backImg = new Image();
-  backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/marioclouds2.jpg';
+  // backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/marioclouds2.jpg';
+  backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/road.jpg';
+
   let cW = ctx.canvas.width;
   let cH = ctx.canvas.height;
 
@@ -20,19 +22,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   let background = new Background();
   
-  let ballX = 600
-  let ballY = Math.floor(Math.random() * (500 - 300) + 300) //450;
+  let ballX = 800
+  let ballY = Math.floor(Math.random() * (300 - 100) + 100) //450;
   let ballRad = 5
   let ballSpeed = -3
 
-  let coinX = 600;
-  let coinY = 300
+  let coinX = 800;
+  let coinY = 150
 
-  let rectPosY = 250
+  let rectPosY = 150
   let rectPosX = 150
   let spacePressed = false;
 
-  const posResetY = Math.floor(Math.random() * (500 - 300) + 300);
+  const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
 
   const jerry = new Image();
   jerry.src ='/Users/william_falcone/Desktop/javascript_game/assets/images/jerry2.jpg';
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   function restartBall(){
     if (ballX < 0){
       ballX = canvas.width;
-      ballY = Math.floor(Math.random() * (500 - 300) + 300)
+      ballY = Math.floor(Math.random() * (300 - 100) + 100)
       
     }
   }
@@ -59,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   function restartCoin(){
     if(coinX < 0){
       coinX = canvas.width;
-      coinY = Math.floor(Math.random() * (500 - 300) + 300)
+      coinY = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
 
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if ((coinX === rectPosX && (coinY > rectPosY && coinY < rectPosY + 100)) || (coinX === rectPosX + 50 && (coinY > rectPosY && coinY < rectPosY + 100))) {
       score += 1
       coinX = canvas.width
-      coinY = Math.floor(Math.random() * (500 - 300) + 300)
+      coinY = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
 
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if ((ballX === rectPosX && (ballY > rectPosY && ballY < rectPosY + 100)) || (ballX === rectPosX + 50 && (ballY > rectPosY && ballY < rectPosY + 100))) {
       score = 0
       ballX = canvas.width
-      ballY = Math.floor(Math.random() * (500 - 300) + 300)
+      ballY = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
 
@@ -170,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     requestAnimationFrame(draw)
     
-   if(spacePressed && rectPosY >300){
+   if(spacePressed && rectPosY >150){
      rectPosY -= 20;
      
 
