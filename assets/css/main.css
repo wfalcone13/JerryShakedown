@@ -6,6 +6,8 @@ body{
 .board{
   display: flex;
   justify-content: center;
+  margin-top: 270px;
+  margin-left: 100px;
 }
 
 .img{

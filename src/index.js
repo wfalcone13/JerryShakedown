@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", () =>{
   let rectPosX = 150
   let spacePressed = false;
 
+  let jerryPosX = 100;
+  let jerryPosY = 200;
+
   const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
 
   const jerry = new Image();
@@ -91,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function coinHitBlock(){
     
-    if ((coinX === rectPosX && (coinY > rectPosY && coinY < rectPosY + 100)) || (coinX === rectPosX + 50 && (coinY > rectPosY && coinY < rectPosY + 100))) {
+    if ((coinX === jerryPosX && (coinY > jerryPosY && coinY < jerryPosY + 100)) || (coinX === jerryPosX + 50 && (coinY > jerryPosY && coinY < jerryPosY + 100))) {
       score += 1
       coinX = canvas.width
       coinY = Math.floor(Math.random() * (300 - 100) + 100)
@@ -100,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function ballHitBlock() {
 
-    if ((ballX === rectPosX && (ballY > rectPosY && ballY < rectPosY + 100)) || (ballX === rectPosX + 50 && (ballY > rectPosY && ballY < rectPosY + 100))) {
+    if ((ballX === jerryPosX && (ballY > jerryPosY && ballY < jerryPosY + 100)) || (ballX === jerryPosY + 50 && (ballY > jerryPosY && ballY < jerryPosY + 100))) {
       score = 0
       ballX = canvas.width
       ballY = Math.floor(Math.random() * (300 - 100) + 100)
@@ -113,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () =>{
   function rect(){
  
     ctx.beginPath();
-    ctx.rect(rectPosX, rectPosY, 50, 100);
-    ctx.fillStyle = "red";
+    ctx.rect(rectPosX, 600, 50, 100);
+    ctx.fillStyle = "transparent";
     ctx.fill();
     ctx.closePath();
   }
@@ -141,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.closePath();
     
     
-    ctx.drawImage(jerry,150,100,50,100);
+    ctx.drawImage(jerry, jerryPosX, jerryPosY,50,100);
     
     // ctx.beginPath();
     // ctx.rect(350, 200, 50, 100);
@@ -172,15 +175,15 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     requestAnimationFrame(draw)
     
-   if(spacePressed && rectPosY >150){
-     rectPosY -= 20;
+   if(spacePressed && jerryPosY >150){
+     jerryPosY -= 20;
      
 
 
    } 
 
-   if(!spacePressed && rectPosY < canvas.height-100){
-     rectPosY += 7
+   if(!spacePressed && jerryPosY < canvas.height-100){
+     jerryPosY += 7
    }
 
   }
