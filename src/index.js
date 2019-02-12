@@ -1,72 +1,64 @@
 document.addEventListener("DOMContentLoaded", () =>{
   let canvas = document.getElementById("game-canvas")
   let ctx = canvas.getContext('2d');
-
-  let backImg = new Image();
-  // backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/marioclouds2.jpg';
-  backImg.src = 'assets/images/back2.jpg';
-
-  let cW = ctx.canvas.width;
-  let cH = ctx.canvas.height;
-
-  function Background(){
-    this.x = 0, this.y = 0, this.w = backImg.width, this.h = backImg.height;
-    this.render = function(){
-      ctx.drawImage(backImg, this.x --, 0);
-      if(this.x <= -800){
-        this.x = 0;
-      }
-    }
-  }
-
-
-  let background = new Background();
   
+
+
+  //ball variables
   let ballX = 800
-  let ballY = Math.floor(Math.random() * (300 - 100) + 100) //450;
+  let ballY = Math.floor(Math.random() * (390 -200 ) + 200) //450;
   let ballRad = 5
   let ballSpeed = -3
 
+  //coin variables
   let coinX = 800;
-  let coinY = 150
+  let coinY = Math.floor(Math.random() * (390 - 200) + 200)
 
-  let rectPosY = 150
-  let rectPosX = 150
+  //jumping?
   let spacePressed = false;
 
-  let jerryPosX = 100;
+  //main figure
+
+  let jerryFig = {
+    height: 100,
+    jumping: true,
+    width: 75,
+    x: 150,
+    x_velocity: 0,
+    y: 200,
+    y_velocity: 0
+  }
+
+  let jerryPosX = 150;
   let jerryPosY = 200;
-
-  const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
-
   const jerry = new Image();
-  jerry.src ='assets/images/jerry2.jpg';
+  jerry.src ='assets/images/jerr3.png';
+
+  // const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
+
 
 
   let score = 0;
 
   //bounce off walls
-  function bouncWall(){
-    if(ballX < 0 || ballX > canvas.width){
-      score += 1
-      ballSpeed = -ballSpeed
-    }
-  }
+  // function bouncWall(){
+  //   if(ballX < 0 || ballX > canvas.width){
+  //     score += 1
+  //     ballSpeed = -ballSpeed
+  //   }
+  // }
 
   function restartBall(){
-    if (ballX < 0){
       ballX = canvas.width;
-      ballY = Math.floor(Math.random() * (300 - 100) + 100)
-      
+      ballY = Math.floor(Math.random() * (300 - 100) + 100)    
     }
-  }
 
   function restartCoin(){
-    if(coinX < 0){
+   
       coinX = canvas.width;
       coinY = Math.floor(Math.random() * (300 - 100) + 100)
     }
-  }
+  
 
   document.addEventListener("keydown", keyDownHander, false);
   document.addEventListener("keyup", keyUpHander, false);
@@ -83,7 +75,22 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
 
-  
+
+  // let controller = { up: false,
+    
+  //   keyListener:function(event){
+  //     let key_state = (event.type === 'keydown') ? true:false;
+      
+  //     switch (event.type) {
+  //       case 32:
+  //       controller.up = key_state;
+  //       break;
+  //     }
+  //   }
+    
+  // }
+
+
 
 
   function drawScore(){
@@ -92,8 +99,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Score: "+score, 100, 100)
   }
 
-  function coinHitBlock(){
-    
+  function coinHitBlock(){  
     if ((coinX === jerryPosX && (coinY > jerryPosY && coinY < jerryPosY + 100)) || (coinX === jerryPosX + 50 && (coinY > jerryPosY && coinY < jerryPosY + 100))) {
       score += 1
       coinX = canvas.width
@@ -103,10 +109,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function ballHitBlock() {
 
-    if ((ballX === jerryPosX && (ballY > jerryPosY && ballY < jerryPosY + 100)) || (ballX === jerryPosY + 50 && (ballY > jerryPosY && ballY < jerryPosY + 100))) {
+    if ((ballX === jerryPosX && (ballY > jerryPosY && ballY < jerryPosY + 100)) || (ballX === jerryPosX + 50 && (ballY > jerryPosY && ballY < jerryPosY + 100))) {
       score = 0
-      ballX = canvas.width
-      ballY = Math.floor(Math.random() * (300 - 100) + 100)
+      restartBall();
     }
   }
 
@@ -125,9 +130,15 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   
   function draw(){
-    ctx.save();
+    // ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // background.render();
+
+
+
+
+
+
 
     //ball
     ctx.beginPath();
@@ -135,27 +146,45 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillStyle = 'red';
     ctx.fill();
     ctx.closePath();
+
+    //road
     ctx.strokeStyle = "#202830";
     ctx.lineWidth = 6;
     ctx.beginPath();
     ctx.moveTo(0, 400);
     ctx.lineTo(800, 400);
     ctx.stroke();
+
+    //jumping
+    if(spacePressed && jerryFig.jumping === false){
+      jerryFig.y_velocity -=35;
+      jerryFig.jumping = true;
+    }
+
+    jerryFig.y_velocity += 1.5;
+    // jerryFig.x += jerryFig.x_velocity;
+    jerryFig.y += jerryFig.y_velocity;
+    // jerryFig.x_velocity *= 0.9;
+    jerryFig.y_velocity *= 0.9;
+
+    if(jerryFig.y > canvas.height -100 ){
+      jerryFig.jumping = false;
+      jerryFig.y = 400-100;
+      jerryFig.y_velocity = 0;
+    }
+    
+     
+    ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
     
     
-    ctx.drawImage(jerry, jerryPosX, jerryPosY,50,100);
-    
-    // ctx.beginPath();
-    // ctx.rect(350, 200, 50, 100);
-    // ctx.fillStyle = "green";
-    // ctx.fill();
-    // ctx.closePath();
 
    
 
     drawScore();
     coin();
-    restartCoin();
+    coinHitBlock();
+    ballHitBlock();
+    // restartCoin();
 
 
 
@@ -166,26 +195,25 @@ document.addEventListener("DOMContentLoaded", () =>{
     coinX+= ballSpeed
 
  
-    // bouncWall();
-    coinHitBlock();
-    ballHitBlock();
-    restartBall();
+    
+    if(ballX < 0){restartBall();}
+    if(coinX < 0){restartCoin();}
     
     
     requestAnimationFrame(draw)
     
-   if(spacePressed && jerryPosY >150){
-     jerryPosY -= 20;
-     
+  //  if(spacePressed && jerryFig.y >150){
+  //    jerryFig.y -= 20;
+  //  } 
 
+  //  if(!spacePressed && jerryFig.y < canvas.height-100){
+  //    jerryFig.y += 7
+  //  }
+    
 
-   } 
-
-   if(!spacePressed && jerryPosY < canvas.height-100){
-     jerryPosY += 7
-   }
 
   }
+  
   draw()
   
 })
