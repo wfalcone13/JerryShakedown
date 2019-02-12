@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   let backImg = new Image();
   // backImg.src = '/Users/william_falcone/Desktop/javascript_game/assets/images/marioclouds2.jpg';
-  backImg.src = 'assets/images/road.jpg';
+  backImg.src = 'assets/images/back2.jpg';
 
   let cW = ctx.canvas.width;
   let cH = ctx.canvas.height;
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     this.x = 0, this.y = 0, this.w = backImg.width, this.h = backImg.height;
     this.render = function(){
       ctx.drawImage(backImg, this.x --, 0);
-      if(this.x <= -499){
+      if(this.x <= -800){
         this.x = 0;
       }
     }
@@ -113,14 +113,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
  
 
-  // function rect(){
- 
-  //   ctx.beginPath();
-  //   ctx.rect(rectPosX, 600, 50, 100);
-  //   ctx.fillStyle = "red";
-  //   ctx.fill();
-  //   ctx.closePath();
-  // }
+
 
   function coin(){
     ctx.beginPath();
@@ -134,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   function draw(){
     ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    background.render();
+    // background.render();
 
     //ball
     ctx.beginPath();
@@ -142,6 +135,12 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillStyle = 'red';
     ctx.fill();
     ctx.closePath();
+    ctx.strokeStyle = "#202830";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(0, 400);
+    ctx.lineTo(800, 400);
+    ctx.stroke();
     
     
     ctx.drawImage(jerry, jerryPosX, jerryPosY,50,100);
