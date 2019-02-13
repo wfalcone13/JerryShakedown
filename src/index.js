@@ -36,7 +36,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   // const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
 
-
+  let trashPosX = 350;    //canvas.width;
+  let trashPosY = 200;              //Math.floor(Math.random() * (300 - 100) + 100); 
+  const trash = new Image();
+  trash.src = 'assets/images/trash.png';
 
   let score = 0;
 
@@ -175,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
      
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
+    ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
     
     
 
