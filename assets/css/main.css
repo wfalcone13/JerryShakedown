@@ -9,8 +9,8 @@ body{
 .board{
   display: flex;
   justify-content: center;
-  margin-top: 270px;
-  margin-left: 100px;
+  margin-top: 12px;
+  margin-left: 50px;
 }
 
 .img{
@@ -19,4 +19,29 @@ body{
 
 #game-canvas{
  background: rgba(255,255,255,0.5);
+}
+
+.game-title{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title-one{
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  text-shadow: -1px -1px 0 #1f28d0, 1px -1px 0 #000, -1px 1px 0 #1f28d0, 1px 1px 0 #1f28d0;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+#title-two{
+  font-family: 'Staatliches', cursive;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  color: yellowgreen;
+  font-size: 54px;
+  padding: 0px;
+  margin: 0px;
 }

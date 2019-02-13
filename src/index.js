@@ -8,14 +8,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //ball variables
-  let ballX = 800
-  let ballY = Math.floor(Math.random() * (390 -200 ) + 200) //450;
-  let ballRad = 5
-  let ballSpeed = -3
+  // let ballX = 800
+  // let ballY = Math.floor(Math.random() * (390 -200 ) + 200) //450;
+  // let ballRad = 5
+  // let ballSpeed = -3
 
-  //coin variables
-  let coinX = 800;
-  let coinY = Math.floor(Math.random() * (390 - 200) + 200)
 
   //jumping?
   let spacePressed = false;
@@ -32,18 +29,27 @@ document.addEventListener("DOMContentLoaded", () =>{
     y_velocity: 0
   }
 
-  let jerryPosX = 150;
-  let jerryPosY = 200;
+ 
   const jerry = new Image();
   jerry.src ='assets/images/jerr3.png';
 
-  // const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
+ 
 
   let trashPosX = 800;    //canvas.width;
   let trashPosY = canvas.height-50; 
   let trashSpeed = -6;             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
+
+  let musicNote1 = {
+    height:50,
+    width: 25,
+    x: 800,
+    y: canvas.height-50,
+    speed: -6
+  }
+  const musicNote = new Image();
+  musicNote.src ='assets/images/music1.png'
 
   let score = 0;
 
@@ -55,13 +61,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     setInterval(scorePlus, 500)
   }
 
-  //bounce off walls
-  // function bouncWall(){
-  //   if(ballX < 0 || ballX > canvas.width){
-  //     score += 1
-  //     ballSpeed = -ballSpeed
-  //   }
-  // }
+
 
   function restartTrash(){
     trashPosX = canvas.width + 100
@@ -69,15 +69,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   
 
-  function restartBall(){
-      ballX = canvas.width;
-      ballY = Math.floor(Math.random() * (300 - 100) + 100)    
-    }
-
-  function restartCoin(){
+  function restartMusicNote1(){
    
-      coinX = canvas.width;
-      coinY = Math.floor(Math.random() * (300 - 100) + 100)
+      musicNote1.x = canvas.width;
+      musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
     }
   
 
@@ -97,20 +92,6 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
 
-  // let controller = { up: false,
-    
-  //   keyListener:function(event){
-  //     let key_state = (event.type === 'keydown') ? true:false;
-      
-  //     switch (event.type) {
-  //       case 32:
-  //       controller.up = key_state;
-  //       break;
-  //     }
-  //   }
-    
-  // }
-
 
 
 
@@ -120,24 +101,27 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Score: "+score, 100, 100)
   }
 
-  function coinHitBlock(){  
-    if ((coinX === jerryPosX && (coinY > jerryPosY && coinY < jerryPosY + 100)) || (coinX === jerryPosX + 50 && (coinY > jerryPosY && coinY < jerryPosY + 100))) {
-      score += 1
-      coinX = canvas.width
-      coinY = Math.floor(Math.random() * (300 - 100) + 100)
+  function jerryHitNote1(){  
+    if ((musicNote1.x === jerryFig.x && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
+      score += 5
+      musicNote1.x = canvas.width
+      musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
 
-  function ballHitBlock() {
+  // function ballHitBlock() {
 
-    if ((ballX === jerryPosX && (ballY > jerryPosY && ballY < jerryPosY + 100)) || (ballX === jerryPosX + 50 && (ballY > jerryPosY && ballY < jerryPosY + 100))) {
-      score = 0
-      restartBall();
-    }
-  }
+  //   if ((ballX === jerryFig.x && (ballY > jerryFig.y && ballY < jerryFig.y + 100)) || (ballX === jerryFig.x + 50 && (ballY > jerryFig.y && ballY < jerryFig.y + 100))) {
+  //     score = 0
+  //     restartBall();
+  //   }
+  // }
 
   function trashHitJerry(){
-    if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y)  ) {
+    if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y+100)  ) {
+      score = 0
+      restartTrash();
+    } else if ( jerryFig.y+100 >= trashPosY && (trashPosX >= jerryFig.x-30 && trashPosX <= jerryFig.x+30) ){
       score = 0
       restartTrash();
     }
@@ -148,25 +132,20 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
 
-  function coin(){
-    ctx.beginPath();
-    ctx.arc(coinX, coinY, ballRad, 0, Math.PI * 2);
-    ctx.fillStyle = 'green';
-    ctx.fill();
-    ctx.closePath();
-  }
+  // function coin(){
+  //   ctx.beginPath();
+  //   ctx.arc(coinX, coinY, ballRad, 0, Math.PI * 2);
+  //   ctx.fillStyle = 'green';
+  //   ctx.fill();
+  //   ctx.closePath();
+  // }
 
   
   function draw(){
     // ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // background.render();
-    //ball
-    ctx.beginPath();
-    ctx.arc(ballX, ballY, ballRad, 0, Math.PI * 2);
-    ctx.fillStyle = 'red';
-    ctx.fill();
-    ctx.closePath();
+
 
     //road
     ctx.strokeStyle = "gray";
@@ -197,15 +176,14 @@ document.addEventListener("DOMContentLoaded", () =>{
      
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
     ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
+    ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
     
     
 
    
 
     drawScore();
-    coin();
-    coinHitBlock();
-    ballHitBlock();
+    jerryHitNote1();
     trashHitJerry(); 
     // restartCoin();
 
@@ -213,14 +191,15 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     //ball moving
-    ballX+= ballSpeed
+   
     trashPosX+= trashSpeed
-    coinX+= ballSpeed
+    musicNote1.x += musicNote1.speed
     
     if(trashPosX < 0){restartTrash();}
+    if (musicNote1.x < 0) { restartMusicNote1()}
     
-    if(ballX < 0){restartBall();}
-    if(coinX < 0){restartCoin();}
+  
+
     
     
     id = requestAnimationFrame(draw)
