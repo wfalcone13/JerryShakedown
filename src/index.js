@@ -47,6 +47,14 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   let score = 0;
 
+  function scorePlus(){
+    score+=1
+  }
+
+  function increaseScore(){
+    setInterval(scorePlus, 500)
+  }
+
   //bounce off walls
   // function bouncWall(){
   //   if(ballX < 0 || ballX > canvas.width){
@@ -202,14 +210,13 @@ document.addEventListener("DOMContentLoaded", () =>{
     // restartCoin();
 
 
-
     
     
     //ball moving
     ballX+= ballSpeed
     trashPosX+= trashSpeed
     coinX+= ballSpeed
-
+    
     if(trashPosX < 0){restartTrash();}
     
     if(ballX < 0){restartBall();}
@@ -218,38 +225,43 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     id = requestAnimationFrame(draw)
     
-  //  if(spacePressed && jerryFig.y >150){
-  //    jerryFig.y -= 20;
-  //  } 
-
-  //  if(!spacePressed && jerryFig.y < canvas.height-100){
-  //    jerryFig.y += 7
-  //  }
-    
-
-
-  }
-  
-  draw()
-  
-  const body = document.getElementsByTagName('body')[0]
-  console.log(document.getElementsByTagName('body')[0])
-  body.addEventListener('click', () => {
-    if(paused){
+    //  if(spacePressed && jerryFig.y >150){
+      //    jerryFig.y -= 20;
+      //  } 
       
-      // requestAnimationFrame(draw);
+      //  if(!spacePressed && jerryFig.y < canvas.height-100){
+        //    jerryFig.y += 7
+        //  }
+        
+        
+        
+        
+      }
+      
       draw()
-      paused = false;
+      increaseScore();
       
-    } else {
-      cancelAnimationFrame(id);
-      paused = true
-    }
-  })
-  
- 
+      const body = document.getElementsByTagName('body')[0]
+      console.log(document.getElementsByTagName('body')[0])
+      body.addEventListener('click', () => {
+        if(paused){
+          
+          // requestAnimationFrame(draw);
+          draw()
+          paused = false;
+          
+        } else {
+          cancelAnimationFrame(id);
+          paused = true
+        }
+        
 
 
+      })
+      
+      
+      
+      
 })
 
 
