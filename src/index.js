@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () =>{
   let canvas = document.getElementById("game-canvas")
   let ctx = canvas.getContext('2d');
+  let id;
+  let paused = false;
+  let pauseCount = 1;
   
 
 
@@ -36,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   // const posResetY = Math.floor(Math.random() * (300 - 100) + 100);
 
-  let trashPosX = 350;    //canvas.width;
-  let trashPosY = 200;              //Math.floor(Math.random() * (300 - 100) + 100); 
+  let trashPosX = 800;    //canvas.width;
+  let trashPosY = canvas.height-50; 
+  let trashSpeed = -6;             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
 
@@ -50,6 +54,12 @@ document.addEventListener("DOMContentLoaded", () =>{
   //     ballSpeed = -ballSpeed
   //   }
   // }
+
+  function restartTrash(){
+    trashPosX = canvas.width + 100
+    trashSpeed = -6
+    }
+  
 
   function restartBall(){
       ballX = canvas.width;
@@ -118,6 +128,13 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
 
+  function trashHitJerry(){
+    if (trashPosX === jerryPosX) {
+      score = 0
+      restartTrash();
+    }
+  }
+
 
  
 
@@ -136,13 +153,6 @@ document.addEventListener("DOMContentLoaded", () =>{
     // ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // background.render();
-
-
-
-
-
-
-
     //ball
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRad, 0, Math.PI * 2);
@@ -151,8 +161,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.closePath();
 
     //road
-    ctx.strokeStyle = "#202830";
-    ctx.lineWidth = 6;
+    ctx.strokeStyle = "gray";
+    ctx.lineWidth = 8;
     ctx.beginPath();
     ctx.moveTo(0, 400);
     ctx.lineTo(800, 400);
@@ -188,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     coin();
     coinHitBlock();
     ballHitBlock();
+    trashHitJerry(); 
     // restartCoin();
 
 
@@ -196,15 +207,16 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     //ball moving
     ballX+= ballSpeed
+    trashPosX+= trashSpeed
     coinX+= ballSpeed
 
- 
+    if(trashPosX < 0){restartTrash();}
     
     if(ballX < 0){restartBall();}
     if(coinX < 0){restartCoin();}
     
     
-    requestAnimationFrame(draw)
+    id = requestAnimationFrame(draw)
     
   //  if(spacePressed && jerryFig.y >150){
   //    jerryFig.y -= 20;
@@ -220,6 +232,24 @@ document.addEventListener("DOMContentLoaded", () =>{
   
   draw()
   
+  const body = document.getElementsByTagName('body')[0]
+  console.log(document.getElementsByTagName('body')[0])
+  body.addEventListener('click', () => {
+    if(paused){
+      
+      // requestAnimationFrame(draw);
+      draw()
+      paused = false;
+      
+    } else {
+      cancelAnimationFrame(id);
+      paused = true
+    }
+  })
+  
+ 
+
+
 })
 
 
