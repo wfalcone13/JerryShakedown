@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function trashHitJerry(){
-    if (trashPosX === jerryPosX) {
+    if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y)  ) {
       score = 0
       restartTrash();
     }
