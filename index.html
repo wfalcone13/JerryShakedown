@@ -2,6 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
   <link href="https://fonts.googleapis.com/css?family=Staatliches|Homemade+Apple|Press+Start+2P" rel="stylesheet">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Game Title</title>
@@ -12,31 +15,59 @@
 <body>
  
 
-  <audio  controls  loop id='player'>
-    
+  <!-- <audio  controls  loop id='player'>
     <source src='./assets/mp3/shake.mp3' type='audio/mp3'>
-  Not Showing</audio>
+  Not Showing</audio> -->
   
   <div class='game-title'>
-
     <h1 id='title-one'>Get Jerry Through</h1>
-
     <h1 id='title-two'>Shakedown Street</h1>
+  </div>
+
+  <div class="middle-page">
+
+  <div class="board"> 
+    <canvas id="game-canvas" width="800" height="400"></canvas>
+  </div>
+
+  <div class="instructions">
+    <div>
+    How to Play: <br>
+    Press Space to help Jerry
+    avoid the obstacles and collect the music notes to
+    increase your score
+    </div>
+  </div>
 
   </div>
 
-  <div class="board">
-   
-  <canvas id="game-canvas" width="800" height="400"></canvas>
-
- 
+  <div  class='social-links'>
+    <div>
+      <i class="fab fa-github"></i>
+      <p>GitHub</p>
+    </div>
+    <div>
+      <i class="fab fa-linkedin">
+      </i>
+      <p>LinkedIn</p>
+    </div>
+    <div>
+      <i class="far fa-user"></i>
+      <p>Will' Site</p>
+    </div>
+    <div>
+      <i class="fab fa-github"></i>
+      <p>Project Repo</p>
+    </div>
   </div>
 
   <script src="dist/main.js" >
 
   </script>
 
-
+<audio controls loop id='player'>
+  <source src='./assets/mp3/shake.mp3' type='audio/mp3'>
+  Not Showing</audio>
 
 </body>
 </html>

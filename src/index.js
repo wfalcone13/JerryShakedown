@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
  
 
-  let trashPosX = 800;    //canvas.width;
+  let trashPosX = 825;    //canvas.width;
   let trashPosY = canvas.height-50; 
   let trashSpeed = -6;             
   const trash = new Image();
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () =>{
       score += 5
       musicNote1.x = canvas.width
       musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
-    }
+    } 
   }
 
   // function ballHitBlock() {
