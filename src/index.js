@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () =>{
   let ctx = canvas.getContext('2d');
   let id;
   let paused = false;
-  let pauseCount = 1;
+  let begin = true;
+  let gameOver = false;
+
   
 
 
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   let jerryFig = {
     height: 100,
     jumping: true,
-    width: 75,
+    width: 80,
     x: 150,
     x_velocity: 0,
     y: 200,
@@ -46,10 +48,35 @@ document.addEventListener("DOMContentLoaded", () =>{
     width: 25,
     x: 800,
     y: canvas.height-50,
-    speed: -6
+    speed: -4
   }
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
+
+  let musicNote2 = {
+    height: 50,
+    width: 25,
+    x: 810,
+    y: canvas.height-100,
+    speed: -4
+  }
+
+  const musicNote2img = new Image();
+  musicNote2img.src = 'assets/images/music2.png'
+
+  function music2Move(){
+    musicNote2.x += musicNote2.speed;
+    musicNote2.y += Math.floor(Math.random() * (20 - 10) + 10)
+    musicNote2.y -= Math.floor(Math.random() * (20 - 10) + 10)
+   
+
+  }
+
+  function music2MoveUp(){
+    // musicNote2.y -= 5
+    // musicNote2.y += 10;
+
+  }
 
   let score = 0;
 
@@ -72,8 +99,14 @@ document.addEventListener("DOMContentLoaded", () =>{
   function restartMusicNote1(){
    
       musicNote1.x = canvas.width;
-      musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
+      musicNote1.y = Math.floor(Math.random() * (375 - 250) + 100)
     }
+
+  function restartMusicNote2() {
+
+    musicNote2.x = canvas.width;
+    musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
+  }
   
 
   document.addEventListener("keydown", keyDownHander, false);
@@ -97,48 +130,64 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function drawScore(){
     ctx.font ='16px Arial';
-    ctx.fillStyle = "white";
-    ctx.fillText("Score: "+score, 100, 100)
+    ctx.fillStyle = "black";
+    ctx.fillText("Score: "+score, 100, 50)
   }
 
+  function drawGameDone() {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = "black";
+    ctx.fillText("Game Over Click Start to try again. Score: "+score, 200, 200)
+  }
+
+
   function jerryHitNote1(){  
-    if ((musicNote1.x === jerryFig.x && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
+    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x <= jerryFig.x + 30) && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
       score += 5
       musicNote1.x = canvas.width
       musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
     } 
   }
 
-  // function ballHitBlock() {
-
-  //   if ((ballX === jerryFig.x && (ballY > jerryFig.y && ballY < jerryFig.y + 100)) || (ballX === jerryFig.x + 50 && (ballY > jerryFig.y && ballY < jerryFig.y + 100))) {
-  //     score = 0
-  //     restartBall();
-  //   }
-  // }
-
-  function trashHitJerry(){
-    if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y+100)  ) {
-      score = 0
-      restartTrash();
-    } else if ( jerryFig.y+100 >= trashPosY && (trashPosX >= jerryFig.x-30 && trashPosX <= jerryFig.x+30) ){
-      score = 0
-      restartTrash();
+  function jerryHitNote2() {
+    if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x <= jerryFig.x + 30) && (musicNote2.y > jerryFig.y && musicNote2.y < jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y > jerryFig.y && musicNote2.y < jerryFig.y + 100))) {
+      score += 5
+      musicNote2.x = canvas.width
+      musicNote2.y = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
 
 
  
 
+  function trashHitJerry(){
+    if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y+100)  ) {
+      restartObjs();
+      gameOver = true
+    } else if ( jerryFig.y+100 >= trashPosY && (trashPosX >= jerryFig.x-30 && trashPosX <= jerryFig.x+30) ){
+      restartObjs();
+      gameOver = true
+    }
+  }
+
+  function restartObjs(){
+    restartTrash();
+    restartMusicNote1();
+    restartMusicNote2();
+  }
+ 
 
 
-  // function coin(){
-  //   ctx.beginPath();
-  //   ctx.arc(coinX, coinY, ballRad, 0, Math.PI * 2);
-  //   ctx.fillStyle = 'green';
-  //   ctx.fill();
-  //   ctx.closePath();
-  // }
+  function lost(){
+    if(gameOver){
+      cancelAnimationFrame(id);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGameDone()
+    
+   
+    }
+  }
+
 
   
   function draw(){
@@ -177,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
     ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
     ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
+    ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
     
     
 
@@ -184,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     drawScore();
     jerryHitNote1();
+    jerryHitNote2()
     trashHitJerry(); 
     // restartCoin();
 
@@ -194,49 +245,68 @@ document.addEventListener("DOMContentLoaded", () =>{
    
     trashPosX+= trashSpeed
     musicNote1.x += musicNote1.speed
+    music2Move();
+    music2MoveUp();
     
     if(trashPosX < 0){restartTrash();}
     if (musicNote1.x < 0) { restartMusicNote1()}
-    
+    if(musicNote2.x < 0){restartMusicNote2()}
   
 
     
     
     id = requestAnimationFrame(draw)
     
-    //  if(spacePressed && jerryFig.y >150){
-      //    jerryFig.y -= 20;
-      //  } 
+        
+  lost()      
+  }
       
-      //  if(!spacePressed && jerryFig.y < canvas.height-100){
-        //    jerryFig.y += 7
-        //  }
-        
-        
-        
-        
-      }
-      
-      draw()
+      // draw()
       increaseScore();
+
+      lost();
       
-      const body = document.getElementsByTagName('body')[0]
-      console.log(document.getElementsByTagName('body')[0])
-      body.addEventListener('click', () => {
+      // const body = document.getElementsByTagName('body')[0]
+      // console.log(document.getElementsByTagName('body')[0])
+      const start = document.getElementById('start')
+      console.log(document.getElementById('start'))
+      start.addEventListener('click', () => {
+        debugger
         if(paused){
           
           // requestAnimationFrame(draw);
           draw()
           paused = false;
           
-        } else {
-          cancelAnimationFrame(id);
-          paused = true
+          
+        } else if (begin || gameOver){
+          score = 0;
+          gameOver = false;
+          draw()
+          begin = false;
+        }
+         else if (gameOver) {
+           debugger
+           gameOver = false;
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+           begin = true;
+          
+          
         }
         
-
-
       })
+
+  // trashHitJerry()    
+
+  const pause = document.getElementById('pause')
+  console.log(document.getElementById('pause'))
+  pause.addEventListener('click', () => {
+    if (!paused && !gameOver) {
+      cancelAnimationFrame(id);
+      paused = true
+    }
+
+  })
       
       
       
