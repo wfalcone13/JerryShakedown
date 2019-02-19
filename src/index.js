@@ -127,18 +127,19 @@ document.addEventListener("DOMContentLoaded", () =>{
   
   function restartTrash(){
     trashPosX = Math.floor(Math.random() * (1500 - 780) + 780)   //random
-    // trashSpeed = -5
+  
   }
   
   function restartCone() {
     conePosX = Math.floor(Math.random() * (1300 - 780) + 780)  
-    // trashSpeed = -5
+    
   }
 
 
   function gameOverObs(){
     conePosX = coneStart;
     trashPosX = trashStart
+    
   }
   function restartJer(){
     
@@ -151,11 +152,14 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
   
   function restartObjs(){
-    
+    debugger
+    trashSpeed = -4
+    coneSpeed = -4
     restartJer();
     gameOverObs();
     restartMusicNote1();
     restartMusicNote2();
+    debugger
    
     
   }
@@ -238,7 +242,10 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
 
- 
+  function resestSpeed(){
+    coneSpeed = -4;
+    trashSpeed = -4;
+  }
 
   function trashHitJerry(){
     if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y+100)  ) {
@@ -246,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () =>{
       restartObjs();
       gameOver = true
     } else if ( jerryFig.y+100 >= trashPosY && (trashPosX >= jerryFig.x-30 && trashPosX <= jerryFig.x+30) ){
-      
+   
       restartObjs();
       gameOver = true
     }
@@ -254,9 +261,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function coneHitJerry() {
     if (conePosX === jerryFig.x + 30 && (conePosY > jerryFig.y && conePosY < jerryFig.y + 100)) {
+
       restartObjs();
       gameOver = true
     } else if (jerryFig.y + 100 >= conePosY && (conePosX >= jerryFig.x - 30 && conePosX <= jerryFig.x + 30)) {
+
       restartObjs();
       gameOver = true
     }
@@ -268,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   function lost(){
     if(gameOver){
       cancelAnimationFrame(id);
+      resestSpeed();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawGameDone()
     
@@ -275,6 +285,22 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
 
+  function scoreIncreaseSpeed(){
+    if (score >= 1200){
+        trashSpeed = -10;
+        coneSpeed = -10;
+    } else if (score >= 800){
+        trashSpeed = -9;
+        coneSpeed = -9;
+    } else if (score >= 500) {
+        trashSpeed = -8;
+        coneSpeed = -8;
+    } else if (score >= 300){
+      coneSpeed = -7
+    } else if (score >= 100) {
+      coneSpeed = -6
+    }
+  } 
 
 
   
@@ -336,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     //ball moving
-   
+    scoreIncreaseSpeed();
     trashPosX+= trashSpeed
     conePosX += coneSpeed;
     musicNote1.x += musicNote1.speed
@@ -360,6 +386,7 @@ document.addEventListener("DOMContentLoaded", () =>{
       
       // draw()
       increaseScore();
+      
 
       lost();
 
