@@ -117,12 +117,19 @@ document.addEventListener("DOMContentLoaded", () =>{
     conePosX = canvas.width + 300
     // trashSpeed = -5
   }
+
+  function restartJer(){
+    jerryFig.x =150;
+    jerryFig.y =200;
+  }
   
   function restartObjs(){
+    restartJer();
     restartTrash();
     restartMusicNote1();
     restartMusicNote2();
     restartCone()
+    
   }
   
   //score info
