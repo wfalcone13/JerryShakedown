@@ -73,8 +73,10 @@ document.addEventListener("DOMContentLoaded", () =>{
   let musicNote2 = {
     height: 50,
     width: 25,
-    x: 810,
-    y: canvas.height-75,
+    x: 700,
+    x_velocity: 0,
+    y: canvas.height-200,
+    y_velocity: 0,
     speed: -4
   }
 
@@ -88,9 +90,34 @@ document.addEventListener("DOMContentLoaded", () =>{
     musicNote2.x += musicNote2.speed;
     musicNote2.y += Math.floor(Math.random() * (20 - 10) + 10)
     musicNote2.y -= Math.floor(Math.random() * (20 - 10) + 10)
+    // musicNote2.x += musicNote2.x_velocity;
+    // musicNote2.x_velocity *= 0.9;
+   
+    // musicNote2.y_velocity += 1.2;
+    // musicNote2.y += musicNote2.y_velocity;
+    // musicNote2.y_velocity *= 0.9;
+    // musicNote2.y -= musicNote2.y_velocity;
+    // musicNote2.x_velocity *= 0.5;
+    // musicNote2.y -= .4;
+   
    
 
   }
+
+  //for tire -- add bounce colision
+  // function music2Move() {
+  //   musicNote2.x += musicNote2.speed;
+  //   // musicNote2.y += Math.floor(Math.random() * (20 - 10) + 10)
+  //   // musicNote2.y -= Math.floor(Math.random() * (20 - 10) + 10)
+  //   musicNote2.y_velocity += 1.5;
+  //   musicNote2.x += musicNote2.x_velocity;
+  //   musicNote2.y += musicNote2.y_velocity;
+  //   musicNote2.x_velocity *= 0.9;
+  //   musicNote2.y_velocity *= 0.9;
+  //   musicNote2.y -= musicNote2.y_velocity;
+
+
+  // }
 
 
 
@@ -104,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     musicNote2.x = canvas.width;
     musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
-
+    
 
   }
   
@@ -320,6 +347,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     conePosX += coneSpeed;
     musicNote1.x += musicNote1.speed
     music2Move();
+    
  
     
     if(trashPosX < 0){restartTrash();}
