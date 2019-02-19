@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //trash figure
-
-  let trashPosX = 825;   
+  let trashStart = canvas.width-50
+  let trashPosX = trashStart;   
   let trashPosY = canvas.height-50; 
   let trashSpeed = -5;             
   const trash = new Image();
@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //cone figure
-
-  let conePosX = 1000;
+  let coneStart = canvas.width+130
+  let conePosX = coneStart;
   let conePosY = canvas.height - 50;
   let coneSpeed = -5;
   const cone = new Image();
@@ -90,17 +90,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     musicNote2.x += musicNote2.speed;
     musicNote2.y += Math.floor(Math.random() * (20 - 10) + 10)
     musicNote2.y -= Math.floor(Math.random() * (20 - 10) + 10)
-    // musicNote2.x += musicNote2.x_velocity;
-    // musicNote2.x_velocity *= 0.9;
-   
-    // musicNote2.y_velocity += 1.2;
-    // musicNote2.y += musicNote2.y_velocity;
-    // musicNote2.y_velocity *= 0.9;
-    // musicNote2.y -= musicNote2.y_velocity;
-    // musicNote2.x_velocity *= 0.5;
-    // musicNote2.y -= .4;
-   
-   
+      
 
   }
 
@@ -136,15 +126,20 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
   
   function restartTrash(){
-    trashPosX = canvas.width + 100
+    trashPosX = Math.floor(Math.random() * (1500 - 780) + 780)   //random
     // trashSpeed = -5
   }
   
   function restartCone() {
-    conePosX = canvas.width + 300
+    conePosX = Math.floor(Math.random() * (1300 - 780) + 780)  
     // trashSpeed = -5
   }
 
+
+  function gameOverObs(){
+    conePosX = coneStart;
+    trashPosX = trashStart
+  }
   function restartJer(){
     
     jerryFig.x_velocity =0;
@@ -158,10 +153,10 @@ document.addEventListener("DOMContentLoaded", () =>{
   function restartObjs(){
     
     restartJer();
-    restartTrash();
+    gameOverObs();
     restartMusicNote1();
     restartMusicNote2();
-    restartCone()
+   
     
   }
   
@@ -281,6 +276,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
 
+
   
   function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -322,12 +318,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     
      
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
-    ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
-    ctx.drawImage(cone, conePosX, conePosY, 50, 50);
     ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
     ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
-    
-    
+    ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
+    ctx.drawImage(cone, conePosX, conePosY, 50, 50);
 
    
 
@@ -348,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     musicNote1.x += musicNote1.speed
     music2Move();
     
- 
+    
     
     if(trashPosX < 0){restartTrash();}
     if (musicNote1.x < 0) { restartMusicNote1()}
@@ -368,6 +362,8 @@ document.addEventListener("DOMContentLoaded", () =>{
       increaseScore();
 
       lost();
+
+      
       
   
       const start = document.getElementById('start')
