@@ -286,19 +286,21 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function scoreIncreaseSpeed(){
-    if (score >= 1200){
+    if (score >= 600){
         trashSpeed = -10;
         coneSpeed = -10;
-    } else if (score >= 800){
+    } else if (score >= 400){
         trashSpeed = -9;
         coneSpeed = -9;
-    } else if (score >= 500) {
+    } else if (score >= 150) {
         trashSpeed = -8;
         coneSpeed = -8;
-    } else if (score >= 300){
+    } else if (score >= 100){
       coneSpeed = -7
-    } else if (score >= 100) {
+      trashSpeed = -7
+    } else if (score >= 50) {
       coneSpeed = -6
+      trashSpeed = -6
     }
   } 
 
