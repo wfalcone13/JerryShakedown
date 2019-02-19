@@ -119,11 +119,17 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function restartJer(){
-    jerryFig.x =150;
-    jerryFig.y =200;
+    
+    jerryFig.x_velocity =0;
+    jerryFig.x = 150;
+    leftPressed = false;
+    rightPressed = false;
+    
+   
   }
   
   function restartObjs(){
+    
     restartJer();
     restartTrash();
     restartMusicNote1();
@@ -214,9 +220,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function trashHitJerry(){
     if (trashPosX === jerryFig.x+30 && (trashPosY > jerryFig.y && trashPosY < jerryFig.y+100)  ) {
+      
       restartObjs();
       gameOver = true
     } else if ( jerryFig.y+100 >= trashPosY && (trashPosX >= jerryFig.x-30 && trashPosX <= jerryFig.x+30) ){
+      
       restartObjs();
       gameOver = true
     }
