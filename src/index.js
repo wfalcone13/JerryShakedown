@@ -9,15 +9,14 @@ document.addEventListener("DOMContentLoaded", () =>{
   
 
 
-  //ball variables
-  // let ballX = 800
-  // let ballY = Math.floor(Math.random() * (390 -200 ) + 200) //450;
-  // let ballRad = 5
-  // let ballSpeed = -3
+ 
 
 
   //jumping?
   let spacePressed = false;
+
+  let leftPressed = false;
+  let rightPressed = false;
 
   //main figure
 
@@ -31,17 +30,33 @@ document.addEventListener("DOMContentLoaded", () =>{
     y_velocity: 0
   }
 
- 
   const jerry = new Image();
   jerry.src ='assets/images/jerr3.png';
 
- 
 
-  let trashPosX = 825;    //canvas.width;
+
+
+
+
+
+  //trash figure
+
+  let trashPosX = 825;   
   let trashPosY = canvas.height-50; 
-  let trashSpeed = -6;             
+  let trashSpeed = -5;             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
+
+
+  //cone figure
+
+  let conePosX = 1000;
+  let conePosY = canvas.height - 50;
+  let coneSpeed = -5;
+  const cone = new Image();
+  cone.src = 'assets/images/cone.png'
+
+  //music figure
 
   let musicNote1 = {
     height:50,
@@ -53,16 +68,21 @@ document.addEventListener("DOMContentLoaded", () =>{
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
 
+  //music2 figure
+
   let musicNote2 = {
     height: 50,
     width: 25,
     x: 810,
-    y: canvas.height-100,
+    y: canvas.height-75,
     speed: -4
   }
 
   const musicNote2img = new Image();
   musicNote2img.src = 'assets/images/music2.png'
+
+
+  // movement functions
 
   function music2Move(){
     musicNote2.x += musicNote2.speed;
@@ -72,12 +92,41 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   }
 
-  function music2MoveUp(){
-    // musicNote2.y -= 5
-    // musicNote2.y += 10;
+
+
+  function restartMusicNote1(){
+   
+    musicNote1.x = canvas.width;
+    musicNote1.y = Math.floor(Math.random() * (375 - 250) + 100)
+    }
+
+  function restartMusicNote2() {
+
+    musicNote2.x = canvas.width;
+    musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
+
 
   }
-
+  
+  function restartTrash(){
+    trashPosX = canvas.width + 100
+    // trashSpeed = -5
+  }
+  
+  function restartCone() {
+    conePosX = canvas.width + 300
+    // trashSpeed = -5
+  }
+  
+  function restartObjs(){
+    restartTrash();
+    restartMusicNote1();
+    restartMusicNote2();
+    restartCone()
+  }
+  
+  //score info
+  
   let score = 0;
 
   function scorePlus(){
@@ -90,23 +139,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
 
-  function restartTrash(){
-    trashPosX = canvas.width + 100
-    trashSpeed = -6
-    }
+
   
 
-  function restartMusicNote1(){
-   
-      musicNote1.x = canvas.width;
-      musicNote1.y = Math.floor(Math.random() * (375 - 250) + 100)
-    }
-
-  function restartMusicNote2() {
-
-    musicNote2.x = canvas.width;
-    musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
-  }
   
 
   document.addEventListener("keydown", keyDownHander, false);
@@ -115,12 +150,20 @@ document.addEventListener("DOMContentLoaded", () =>{
   function keyDownHander(e){
     if (e.keyCode === 32){
       spacePressed = true;
+    } else if (e.keyCode === 37){
+      leftPressed = true;
+    } else if (e.keyCode === 39){
+      rightPressed = true;
     }
   }
 
   function keyUpHander(e) {
     if (e.keyCode === 32) {
       spacePressed = false;
+    } else if (e.keyCode === 37) {
+      leftPressed = false;
+    } else if (e.keyCode === 39) {
+      rightPressed = false;
     }
   }
 
@@ -129,20 +172,22 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   function drawScore(){
-    ctx.font ='16px Arial';
+    ctx.font ='20px Staatliches';
     ctx.fillStyle = "black";
     ctx.fillText("Score: "+score, 100, 50)
   }
 
   function drawGameDone() {
-    ctx.font = '16px Arial';
+    ctx.font = '20px Staatliches';
     ctx.fillStyle = "black";
     ctx.fillText("Game Over Click Start to try again. Score: "+score, 200, 200)
   }
 
 
+
+  // collision
   function jerryHitNote1(){  
-    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x <= jerryFig.x + 30) && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
+    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x-20 <= jerryFig.x + 40) && (musicNote1.y+15 >= jerryFig.y && musicNote1.y+10 < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
       score += 5
       musicNote1.x = canvas.width
       musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
@@ -150,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function jerryHitNote2() {
-    if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x <= jerryFig.x + 30) && (musicNote2.y > jerryFig.y && musicNote2.y < jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y > jerryFig.y && musicNote2.y < jerryFig.y + 100))) {
+    if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x-20 <= jerryFig.x + 40) && (musicNote2.y+15 >= jerryFig.y && musicNote2.y+10 <= jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y >= jerryFig.y && musicNote2.y <= jerryFig.y + 100))) {
       score += 5
       musicNote2.x = canvas.width
       musicNote2.y = Math.floor(Math.random() * (300 - 100) + 100)
@@ -170,11 +215,16 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
 
-  function restartObjs(){
-    restartTrash();
-    restartMusicNote1();
-    restartMusicNote2();
+  function coneHitJerry() {
+    if (conePosX === jerryFig.x + 30 && (conePosY > jerryFig.y && conePosY < jerryFig.y + 100)) {
+      restartObjs();
+      gameOver = true
+    } else if (jerryFig.y + 100 >= conePosY && (conePosX >= jerryFig.x - 30 && conePosX <= jerryFig.x + 30)) {
+      restartObjs();
+      gameOver = true
+    }
   }
+
  
 
 
@@ -191,9 +241,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   
   function draw(){
-    // ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // background.render();
 
 
     //road
@@ -210,10 +258,18 @@ document.addEventListener("DOMContentLoaded", () =>{
       jerryFig.jumping = true;
     }
 
+    if (leftPressed && jerryFig.x >= 100){
+      jerryFig.x_velocity -= 0.5;
+    }
+
+    if (rightPressed && jerryFig.x <= 700){
+      jerryFig.x_velocity += 0.5;
+    }
+
     jerryFig.y_velocity += 1.5;
-    // jerryFig.x += jerryFig.x_velocity;
+    jerryFig.x += jerryFig.x_velocity;
     jerryFig.y += jerryFig.y_velocity;
-    // jerryFig.x_velocity *= 0.9;
+    jerryFig.x_velocity *= 0.9;
     jerryFig.y_velocity *= 0.9;
 
     if(jerryFig.y > canvas.height -100 ){
@@ -225,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () =>{
      
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
     ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
+    ctx.drawImage(cone, conePosX, conePosY, 50, 50);
     ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
     ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
     
@@ -236,7 +293,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     jerryHitNote1();
     jerryHitNote2()
     trashHitJerry(); 
-    // restartCoin();
+    coneHitJerry();
+ 
 
 
     
@@ -244,13 +302,15 @@ document.addEventListener("DOMContentLoaded", () =>{
     //ball moving
    
     trashPosX+= trashSpeed
+    conePosX += coneSpeed;
     musicNote1.x += musicNote1.speed
     music2Move();
-    music2MoveUp();
+ 
     
     if(trashPosX < 0){restartTrash();}
     if (musicNote1.x < 0) { restartMusicNote1()}
     if(musicNote2.x < 0){restartMusicNote2()}
+    if (conePosX < 0) { restartCone() }
   
 
     
@@ -266,12 +326,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
       lost();
       
-      // const body = document.getElementsByTagName('body')[0]
-      // console.log(document.getElementsByTagName('body')[0])
+  
       const start = document.getElementById('start')
       console.log(document.getElementById('start'))
       start.addEventListener('click', () => {
-        debugger
+        
         if(paused){
           
           // requestAnimationFrame(draw);
@@ -286,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () =>{
           begin = false;
         }
          else if (gameOver) {
-           debugger
+           
            gameOver = false;
            ctx.clearRect(0, 0, canvas.width, canvas.height);
            begin = true;
