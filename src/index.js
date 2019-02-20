@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //cone figure
-  let coneStart = canvas.width+130
+  let coneStart = canvas.width+220
   let conePosX = coneStart;
   let conePosY = canvas.height - 50;
   let coneSpeed = -5;
