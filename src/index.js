@@ -68,6 +68,17 @@ document.addEventListener("DOMContentLoaded", () =>{
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
 
+
+  let musicNote3 = {
+    height: 50,
+    width: 25,
+    x: 950,
+    y: Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150),
+    speed: -4
+  }
+  const musicNote3Img = new Image();
+  musicNote3Img.src = 'assets/images/music1.png'
+
   //music2 figure
   // Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150)
   let musicNote2 = {
@@ -113,13 +124,20 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function restartMusicNote1(){
    
-    musicNote1.x = canvas.width;
+    musicNote1.x = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
     musicNote1.y = Math.floor(Math.random() * (375 - 250) + 100)
     }
 
+  function restartMusicNote3() {
+
+    musicNote3.x = Math.floor(Math.random() * (1300 - canvas.width+50) + canvas.width+50);
+    musicNote3.y = Math.floor(Math.random() * (375 - 250) + 100)
+  }
+
+
   function restartMusicNote2() {
 
-    musicNote2.x = canvas.width+80;
+    musicNote2.x = Math.floor(Math.random() * (1300 - canvas.width+100) + canvas.width+100)
     musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
     
 
@@ -159,7 +177,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     gameOverObs();
     restartMusicNote1();
     restartMusicNote2();
-    debugger
+    restartMusicNote3();
+    
    
     
   }
@@ -228,15 +247,23 @@ document.addEventListener("DOMContentLoaded", () =>{
   function jerryHitNote1(){  
     if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x-20 <= jerryFig.x + 40) && (musicNote1.y+15 >= jerryFig.y && musicNote1.y+10 < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
       score += 5
-      musicNote1.x = canvas.width
+      musicNote1.x = Math.floor(Math.random() * (1000 - canvas.width) + canvas.width);
       musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
     } 
+  }
+
+  function jerryHitNote3() {
+    if (((musicNote3.x >= jerryFig.x - 30 && musicNote3.x - 20 <= jerryFig.x + 40) && (musicNote3.y + 15 >= jerryFig.y && musicNote3.y + 10 < jerryFig.y + 100)) || (musicNote3.x === jerryFig.x + 50 && (musicNote3.y > jerryFig.y && musicNote3.y < jerryFig.y + 100))) {
+      score += 5
+      musicNote3.x = Math.floor(Math.random() * (1000 - canvas.width+35) + canvas.width+25);
+      musicNote3.y = Math.floor(Math.random() * (300 - 100) + 100)
+    }
   }
 
   function jerryHitNote2() {
     if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x-20 <= jerryFig.x + 40) && (musicNote2.y+15 >= jerryFig.y && musicNote2.y+10 <= jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y >= jerryFig.y && musicNote2.y <= jerryFig.y + 100))) {
       score += 5
-      musicNote2.x = canvas.width
+      musicNote2.x = Math.floor(Math.random() * (1000 - canvas.width+50) + canvas.width+50);
       musicNote2.y = Math.floor(Math.random() * (300 - 100) + 100)
     }
   }
@@ -348,6 +375,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
     ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
     ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
+    ctx.drawImage(musicNote3Img, musicNote3.x, musicNote3.y, musicNote3.width, musicNote3.height)
+    
     ctx.drawImage(trash, trashPosX, trashPosY, 75, 50);
     ctx.drawImage(cone, conePosX, conePosY, 50, 50);
 
@@ -356,6 +385,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     drawScore();
     jerryHitNote1();
     jerryHitNote2()
+    jerryHitNote3();
     trashHitJerry(); 
     coneHitJerry();
  
@@ -367,7 +397,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     scoreIncreaseSpeed();
     trashPosX+= trashSpeed
     conePosX += coneSpeed;
-    musicNote1.x += musicNote1.speed
+    musicNote1.x += musicNote1.speed;
+    musicNote3.x += musicNote3.speed;
     music2Move();
     
     
@@ -375,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if(trashPosX < 0){restartTrash();}
     if (musicNote1.x < 0) { restartMusicNote1()}
     if(musicNote2.x < 0){restartMusicNote2()}
+    if (musicNote3.x < 0) { restartMusicNote3() }
     if (conePosX < 0) { restartCone() }
   
 
