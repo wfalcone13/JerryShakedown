@@ -130,14 +130,14 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function restartMusicNote3() {
 
-    musicNote3.x = Math.floor(Math.random() * (1300 - canvas.width+50) + canvas.width+50);
+    musicNote3.x = Math.floor(Math.random() * (1300 - canvas.width+75) + canvas.width+75);
     musicNote3.y = Math.floor(Math.random() * (375 - 250) + 100)
   }
 
 
   function restartMusicNote2() {
 
-    musicNote2.x = Math.floor(Math.random() * (1300 - canvas.width+100) + canvas.width+100)
+    musicNote2.x = Math.floor(Math.random() * (1300 - canvas.width+125) + canvas.width+125)
     musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
     
 
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   // collision
   function jerryHitNote1(){  
-    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x-20 <= jerryFig.x + 40) && (musicNote1.y+15 >= jerryFig.y && musicNote1.y+10 < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
+    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x-20 <= jerryFig.x + 40) && (musicNote1.y+20 >= jerryFig.y && musicNote1.y+15 < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
       score += 5
       musicNote1.x = Math.floor(Math.random() * (1000 - canvas.width) + canvas.width);
       musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function jerryHitNote3() {
-    if (((musicNote3.x >= jerryFig.x - 30 && musicNote3.x - 20 <= jerryFig.x + 40) && (musicNote3.y + 15 >= jerryFig.y && musicNote3.y + 10 < jerryFig.y + 100)) || (musicNote3.x === jerryFig.x + 50 && (musicNote3.y > jerryFig.y && musicNote3.y < jerryFig.y + 100))) {
+    if (((musicNote3.x >= jerryFig.x - 30 && musicNote3.x - 20 <= jerryFig.x + 40) && (musicNote3.y + 20 >= jerryFig.y && musicNote3.y + 15 < jerryFig.y + 100)) || (musicNote3.x === jerryFig.x + 50 && (musicNote3.y > jerryFig.y && musicNote3.y < jerryFig.y + 100))) {
       score += 5
       musicNote3.x = Math.floor(Math.random() * (1000 - canvas.width+35) + canvas.width+25);
       musicNote3.y = Math.floor(Math.random() * (300 - 100) + 100)
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function jerryHitNote2() {
-    if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x-20 <= jerryFig.x + 40) && (musicNote2.y+15 >= jerryFig.y && musicNote2.y+10 <= jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y >= jerryFig.y && musicNote2.y <= jerryFig.y + 100))) {
+    if (((musicNote2.x >= jerryFig.x - 30 && musicNote2.x-20 <= jerryFig.x + 40) && (musicNote2.y+20 >= jerryFig.y && musicNote2.y+15 <= jerryFig.y + 100)) || (musicNote2.x === jerryFig.x + 50 && (musicNote2.y >= jerryFig.y && musicNote2.y <= jerryFig.y + 100))) {
       score += 5
       musicNote2.x = Math.floor(Math.random() * (1000 - canvas.width+50) + canvas.width+50);
       musicNote2.y = Math.floor(Math.random() * (300 - 100) + 100)
