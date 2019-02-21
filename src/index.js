@@ -62,20 +62,20 @@ document.addEventListener("DOMContentLoaded", () =>{
     height:50,
     width: 25,
     x: 800,
-    y: canvas.height-50,
+    y: Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150),
     speed: -4
   }
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
 
   //music2 figure
-
+  // Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150)
   let musicNote2 = {
     height: 50,
     width: 25,
     x: 700,
     x_velocity: 0,
-    y: canvas.height-200,
+    y: Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150),
     y_velocity: 0,
     speed: -4
   }
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function restartMusicNote2() {
 
-    musicNote2.x = canvas.width;
+    musicNote2.x = canvas.width+80;
     musicNote2.y = Math.floor(Math.random() * (375 - 250) + 100)
     
 
