@@ -236,9 +236,11 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function drawGameDone() {
-    ctx.font = '20px Staatliches';
+    ctx.font = '30px Staatliches';
     ctx.fillStyle = "black";
-    ctx.fillText("Game Over Click Start to try again. Score: "+score, 200, 200)
+    ctx.fillText("Score: " + score, 200, 150)
+    ctx.fillText("Game Over!", 200, 200)
+    ctx.fillText("Click Start to try again", 200, 250 )
   }
 
 

@@ -114,3 +114,7 @@ body{
 .social-links i{
   font-size: 30px;
 }
+
+#player{
+  display: none;
+}
