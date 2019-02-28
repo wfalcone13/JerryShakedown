@@ -427,8 +427,8 @@ document.addEventListener("DOMContentLoaded", () =>{
       lost();
 
       
-      
-  
+      let music_play;
+
       const start = document.getElementById('start')
       console.log(document.getElementById('start'))
       start.addEventListener('click', () => {
@@ -440,20 +440,19 @@ document.addEventListener("DOMContentLoaded", () =>{
           paused = false;
           
           
-        } else if (begin || gameOver){
+        } else if (begin){
           score = 0;
           gameOver = false;
           draw()
           begin = false;
-        }
-         else if (gameOver) {
-           
-           gameOver = false;
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           begin = true;
-          
-          
-        }
+          audio.play()
+          music_play = true 
+        } else if (gameOver) {
+          score = 0;
+          gameOver = false;
+          draw()
+          begin = false;
+       }
         
       })
 
@@ -468,21 +467,25 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   })
 
-  let music_play = false 
+  
   const audio = new Audio();
   audio.src = "./assets/mp3/shake.mp3"
   
 
   const music = document.getElementById('music-p')
-  music.addEventListener('click', ()=>{
-    if (music_play === false ){
-        audio.play();
-    } else {
+  music.addEventListener('mousedown', ()=>{
+    if (music_play){
       audio.pause();
+      music_play = !music_play
+      music.innerText = 'Music On'
+    } else {
+      audio.play();
+      music_play = !music_play
+      music.innerText = 'Music Off'
+
       
     }
 
-    music_play = !music_play
   })    
       
       
