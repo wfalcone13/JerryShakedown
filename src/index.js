@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
   
   function restartObjs(){
-    debugger
+    
     trashSpeed = -4
     coneSpeed = -4
     restartJer();
@@ -460,7 +460,6 @@ document.addEventListener("DOMContentLoaded", () =>{
   // trashHitJerry()    
 
   const pause = document.getElementById('pause')
-  console.log(document.getElementById('pause'))
   pause.addEventListener('click', () => {
     if (!paused && !gameOver) {
       cancelAnimationFrame(id);
@@ -468,7 +467,23 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
 
   })
+
+  let music_play = false 
+  const audio = new Audio();
+  audio.src = "./assets/mp3/shake.mp3"
+  
+
+  const music = document.getElementById('music-p')
+  music.addEventListener('click', ()=>{
+    if (music_play === false ){
+        audio.play();
+    } else {
+      audio.pause();
       
+    }
+
+    music_play = !music_play
+  })    
       
       
       
