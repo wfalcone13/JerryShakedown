@@ -62,8 +62,8 @@ body{
 
 .instructions {
   background: rgba(255,255,255,0.5);
-  height: 175px;
-  width: 175px;
+  height: 223px;
+  width: 188px;
   font-family: 'Staatliches', cursive;
   padding: 11px;
 }
@@ -73,7 +73,7 @@ body{
   justify-content: space-around;
   background: rgba(255,255,255,0.5);
   height: 25px;
-  width: 197px;
+  width: 209px;
   margin-top: 5px;
 }
 

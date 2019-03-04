@@ -426,8 +426,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
       lost();
 
-      
+    
       let music_play;
+    
+      // start fucntions
 
       const start = document.getElementById('start')
       start.addEventListener('click', () => {
@@ -451,11 +453,54 @@ document.addEventListener("DOMContentLoaded", () =>{
           gameOver = false;
           draw()
           begin = false;
+          audio.play()
+          music_play = true 
        }
         
       })
+      
 
-  // trashHitJerry()    
+  document.addEventListener("keydown", enterStart, false);
+ 
+  function enterStart(e){
+    if(e.keyCode === 13){
+      if (paused) {
+
+        // requestAnimationFrame(draw);
+        draw()
+        paused = false;
+
+
+      } else if (begin) {
+        score = 0;
+        gameOver = false;
+        draw()
+        begin = false;
+        audio.play()
+        music_play = true
+      } else if (gameOver) {
+        score = 0;
+        gameOver = false;
+        draw()
+        begin = false;
+        audio.play()
+        music_play = true
+      }
+    }
+  }
+
+// Pause Functions
+  document.addEventListener("keydown", pauseKey, false);
+  
+  function pauseKey(e){
+    if(e.keyCode === 80){
+      if (!paused && !gameOver) {
+        cancelAnimationFrame(id);
+        paused = true
+      }
+    }
+  }
+    
 
   const pause = document.getElementById('pause')
   pause.addEventListener('click', () => {
@@ -466,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   })
 
-  
+  // music
   const audio = new Audio();
   audio.src = "./assets/mp3/shake.mp3"
   
@@ -485,8 +530,24 @@ document.addEventListener("DOMContentLoaded", () =>{
       
     }
 
-  })    
-      
+  })   
+  
+  document.addEventListener("keydown", musicKey, false);
+  function musicKey(e){
+    if(e.keyCode === 77){
+      if (music_play) {
+        audio.pause();
+        music_play = !music_play
+        music.innerText = 'Music On'
+      } else {
+        audio.play();
+        music_play = !music_play
+        music.innerText = 'Music Off'
+
+
+      }
+    }
+  }
       
       
 })
