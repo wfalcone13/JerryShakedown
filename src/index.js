@@ -491,12 +491,20 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 // Pause Functions
   document.addEventListener("keydown", pauseKey, false);
-  
+  const pText = document.getElementById('pause')
   function pauseKey(e){
     if(e.keyCode === 80){
-      if (!paused && !gameOver) {
+      if (!paused && !gameOver && !begin) {
         cancelAnimationFrame(id);
         paused = true
+        pText.innerText = "paused"
+      } else if (paused) {
+
+        // requestAnimationFrame(draw);
+        draw()
+        paused = false;
+        pText.innerText = "pause"
+
       }
     }
   }
