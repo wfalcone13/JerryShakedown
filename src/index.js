@@ -430,7 +430,6 @@ document.addEventListener("DOMContentLoaded", () =>{
       let music_play;
 
       const start = document.getElementById('start')
-      console.log(document.getElementById('start'))
       start.addEventListener('click', () => {
         
         if(paused){
