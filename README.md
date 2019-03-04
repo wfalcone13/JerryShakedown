@@ -1,44 +1,19 @@
 ## Get Jerry Through Shakedown Street
+[Live link](https://wfalcone13.github.io/JerryShakedown/)
 
-### Background
-Get Jerry Through Shakedown Street is a side scroller adventure game inpired by the band, the Grateful Dead. 
+### Overview
+Get Jerry Through Shakedown Street is a side scroller adventure game inpired by the band, the Grateful Dead. The objective of the game is to help Jerry avoid the trash can and cone obstacles while collecting the music notes.  
 
-### Functionality & MVP  
-In Get Jerry Through Shakedown Street users will be able to:
-- [ ] Start the game
-- [ ] Make Jerry jump over obstacles 
-- [ ] Toggle between music on/off
+![game board][assets/images/game_board.png]
 
-In addition, this project will include:
-- [ ] A production README
+### Play
+Users can start game with the Enter Key. Pause game with P key. Toggle music with the M key. Users can move the Jerry Figure with the left and right keys and can have Jerry jump with the spacebar. The score will increase until Jerry hits an obstacle. Jerry can collect music notes to increase score. When Jerry hits a trash can or cone the game ends. 
 
-### Wireframes
-This game will consist of a single screen with a game board, the main title, links to my Github, linkedIn, Personal site and Game Repo. Game button will be the space bar to make Jerry jump. On the right side will include info about the game, instructions and option to change music on/off
-
-![wireframe](jwirefram.png)
+### Technologies
+- `Canvas` for the game board and figures 
+- `Javascript` to create game play
+- `CSS` to style the page
+- `HTML5` for page layout
 
 
-### Architecture and Technologies
-- [ ] Javascript
-- [ ] CSS
-- [ ] HTML5
-- [ ] Webpack
-- [ ] Canvas
 
-### Implementation Timeline
-**Day 1**:
-  Plan out Canvas and Javascript work
-
-**Day 2**:
-  Begin work and design
-
-**Day 3**:
-  Continue work
-  
-**Day 4**:
-Style the front end
-
-### Bonus Features 
-- [ ] Track highscores
-- [ ] Change music tracks
-- [ ] Add animations
