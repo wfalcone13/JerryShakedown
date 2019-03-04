@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + score, 200, 150)
     ctx.fillText("Game Over!", 200, 200)
-    ctx.fillText("Click Start to try again", 200, 250 )
+    ctx.fillText("Hit Enter to try again", 200, 250 )
   }
 
 
