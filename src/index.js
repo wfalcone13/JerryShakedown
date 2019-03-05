@@ -243,6 +243,14 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Hit Enter to try again", 200, 250 )
   }
 
+  function beginGameScreen(){
+    
+    ctx.font = '30px Staatliches';
+    ctx.fillStyle = "black";
+    ctx.fillText("Press Enter to start", 300,200)
+    
+  }
+
 
 
   // collision
@@ -430,6 +438,11 @@ document.addEventListener("DOMContentLoaded", () =>{
       let music_play;
     
       // start fucntions
+
+
+      if(begin){
+        beginGameScreen()
+      }
 
       const start = document.getElementById('start')
       start.addEventListener('click', () => {

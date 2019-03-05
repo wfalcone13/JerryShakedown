@@ -2,7 +2,7 @@
 [Live link](https://wfalcone13.github.io/JerryShakedown/)
 
 ### Overview
-Get Jerry Through Shakedown Street is a side scroller adventure game inpired by the band, the Grateful Dead. The objective of the game is to help Jerry avoid the trash can and cone obstacles while collecting the music notes.  
+Get Jerry Through Shakedown Street is a side scroller adventure game inspired by the band, the Grateful Dead. The objective of the game is to help Jerry avoid the trash can and cone obstacles while collecting the music notes.  
 
 ![game board](assets/images/game_board.png)
 
