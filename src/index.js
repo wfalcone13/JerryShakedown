@@ -188,12 +188,19 @@ document.addEventListener("DOMContentLoaded", () =>{
   let score = 0;
 
   function scorePlus(){
+    if(!paused){
     score+=1
+    }
+    
   }
 
+ 
   function increaseScore(){
     setInterval(scorePlus, 500)
+    
   }
+
+  
 
 
 
@@ -423,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     id = requestAnimationFrame(draw)
-    
+   
         
   lost()      
   }
@@ -437,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
       let music_play;
     
-      // start fucntions
+     
 
 
       if(begin){
@@ -454,13 +461,17 @@ document.addEventListener("DOMContentLoaded", () =>{
           paused = false;
           
           
+          
         } else if (begin){
+          
           score = 0;
           gameOver = false;
           draw()
           begin = false;
           audio.play()
-          music_play = true 
+          music_play = true
+          
+         
         } else if (gameOver) {
           score = 0;
           gameOver = false;
@@ -476,12 +487,14 @@ document.addEventListener("DOMContentLoaded", () =>{
   document.addEventListener("keydown", enterStart, false);
  
   function enterStart(e){
+    debugger
     if(e.keyCode === 13){
       if (paused) {
 
         // requestAnimationFrame(draw);
         draw()
         paused = false;
+      
 
 
       } else if (begin) {
@@ -491,6 +504,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         begin = false;
         audio.play()
         music_play = true
+        
       } else if (gameOver) {
         score = 0;
         gameOver = false;
