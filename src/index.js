@@ -1,5 +1,5 @@
 import jerryFig from './jerry';
-import trashCanOne from './object';
+import {trashCanOne, coneOne } from './object';
 
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -55,10 +55,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //cone figure
-  let coneStart = canvas.width+220
-  let conePosX = coneStart;
-  let conePosY = canvas.height - 50;
-  let coneSpeed = -5;
+  // let coneOne.start = canvas.width+220
+  // let coneOne.posX = coneOne.start;
+  // let coneOne.posY = canvas.height - 50;
+  // let coneOne.speed = -5;
   const cone = new Image();
   cone.src = 'assets/images/cone.png'
 
@@ -155,13 +155,13 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
   
   function restartCone() {
-    conePosX = Math.floor(Math.random() * (1300 - 780) + 780)  
+    coneOne.posX = Math.floor(Math.random() * (1300 - 780) + 780)  
     
   }
 
 
   function gameOverObs(){
-    conePosX = coneStart;
+    coneOne.posX = coneOne.start;
     trashCanOne.posX = trashCanOne.start
     
   }
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   function restartObjs(){
     
     trashCanOne.speed = -4
-    coneSpeed = -4
+    coneOne.speed = -4
     restartJer();
     gameOverObs();
     restartMusicNote1();
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   function resestSpeed(){
-    coneSpeed = -4;
+    coneOne.speed = -4;
     trashCanOne.speed = -4;
   }
 
@@ -310,11 +310,11 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function coneHitJerry() {
-    if (conePosX === jerryFig.x + 30 && (conePosY > jerryFig.y && conePosY < jerryFig.y + 100)) {
+    if (coneOne.posX === jerryFig.x + 30 && (coneOne.posY > jerryFig.y && coneOne.posY < jerryFig.y + 100)) {
 
       restartObjs();
       gameOver = true
-    } else if (jerryFig.y + 100 >= conePosY && (conePosX >= jerryFig.x - 30 && conePosX <= jerryFig.x + 30)) {
+    } else if (jerryFig.y + 100 >= coneOne.posY && (coneOne.posX >= jerryFig.x - 30 && coneOne.posX <= jerryFig.x + 30)) {
 
       restartObjs();
       gameOver = true
@@ -338,18 +338,18 @@ document.addEventListener("DOMContentLoaded", () =>{
   function scoreIncreaseSpeed(){
     if (score >= 600){
         trashCanOne.speed = -10;
-        coneSpeed = -10;
+        coneOne.speed = -10;
     } else if (score >= 400){
         trashCanOne.speed = -9;
-        coneSpeed = -9;
+        coneOne.speed = -9;
     } else if (score >= 150) {
         trashCanOne.speed = -8;
-        coneSpeed = -8;
+        coneOne.speed = -8;
     } else if (score >= 100){
-      coneSpeed = -7
+      coneOne.speed = -7
       trashCanOne.speed = -7
     } else if (score >= 50) {
-      coneSpeed = -6
+      coneOne.speed = -6
       trashCanOne.speed = -6
     }
   } 
@@ -400,8 +400,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
     ctx.drawImage(musicNote3Img, musicNote3.x, musicNote3.y, musicNote3.width, musicNote3.height)
     
-    ctx.drawImage(trash, trashCanOne.posX, trashCanOne.posY, 75, 50);
-    ctx.drawImage(cone, conePosX, conePosY, 50, 50);
+    ctx.drawImage(trash, trashCanOne.posX, trashCanOne.posY, trashCanOne.height, trashCanOne.width);
+    ctx.drawImage(cone, coneOne.posX, coneOne.posY, coneOne.height, coneOne.width);
 
    
 
@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     //ball moving
     scoreIncreaseSpeed();
     trashCanOne.posX+= trashCanOne.speed
-    conePosX += coneSpeed;
+    coneOne.posX += coneOne.speed;
     musicNote1.x += musicNote1.speed;
     musicNote3.x += musicNote3.speed;
     music2Move();
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if (musicNote1.x < 0) { restartMusicNote1()}
     if(musicNote2.x < 0){restartMusicNote2()}
     if (musicNote3.x < 0) { restartMusicNote3() }
-    if (conePosX < 0) { restartCone() }
+    if (coneOne.posX < 0) { restartCone() }
   
 
     
