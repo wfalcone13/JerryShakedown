@@ -24,7 +24,7 @@ export class Trash extends GameObjects{
 
 
 
-class Cone extends GameObjects{
+export class Cone extends GameObjects{
   constructor(start, posX, posY, speed, height, width) {
     super(start, posX, posY, speed, height, width)
   }
@@ -81,6 +81,8 @@ export let musicNoteTwo = new Notes(
   50,
   25
 )
+
+
 
 export let musicNoteThree = new Notes(
   950,

@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //jumping?
-  let spacePressed = false;
+  // let spacePressed = false;
 
-  let leftPressed = false;
-  let rightPressed = false;
+  // let leftPressed = false;
+  // let rightPressed = false;
 
   //main figure
 
@@ -74,30 +74,6 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
 
-
-
-
-  // function restartmusicNoteOne(){
-   
-  //   musicNoteOne.posX = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
-  //   musicNoteOne.posY = Math.floor(Math.random() * (375 - 250) + 100)
-  //   }
-
-  // function restartmusicNoteThree() {
-
-  //   musicNoteThree.posX = Math.floor(Math.random() * (1300 - canvas.width+75) + canvas.width+75);
-  //   musicNoteThree.posY = Math.floor(Math.random() * (375 - 250) + 100)
-  // }
-
-
-  // function restartmusicNoteTwo() {
-
-  //   musicNoteTwo.posX = Math.floor(Math.random() * (1300 - canvas.width+125) + canvas.width+125)
-  //   musicNoteTwo.posY = Math.floor(Math.random() * (375 - 250) + 100)
-    
-
-  // }
-  
   
 
 
@@ -106,21 +82,21 @@ document.addEventListener("DOMContentLoaded", () =>{
     trashCanOne.posX = trashCanOne.start
     
   }
-  function restartJer(){
+  // function restartJer(){
     
-    jerryFig.x_velocity =0;
-    jerryFig.x = 150;
-    leftPressed = false;
-    rightPressed = false;
+  //   jerryFig.x_velocity =0;
+  //   jerryFig.x = 150;
+  //   leftPressed = false;
+  //   rightPressed = false;
     
    
-  }
+  // }
   
   function restartObjs(){
     
     trashCanOne.speed = -4
     coneOne.speed = -4
-    restartJer();
+    jerryFig.restartJer();
     gameOverObs();
     musicNoteOne.restartMusicNote();
     musicNoteTwo.restartMusicNote();
@@ -162,21 +138,21 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   function keyDownHander(e){
     if (e.keyCode === 32){
-      spacePressed = true;
+      jerryFig.spacePressed = true;
     } else if (e.keyCode === 37){
-      leftPressed = true;
+      jerryFig.leftPressed = true;
     } else if (e.keyCode === 39){
-      rightPressed = true;
+      jerryFig.rightPressed = true;
     }
   }
 
   function keyUpHander(e) {
     if (e.keyCode === 32) {
-      spacePressed = false;
+      jerryFig.spacePressed = false;
     } else if (e.keyCode === 37) {
-      leftPressed = false;
+      jerryFig.leftPressed = false;
     } else if (e.keyCode === 39) {
-      rightPressed = false;
+      jerryFig.rightPressed = false;
     }
   }
 
@@ -311,16 +287,16 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.stroke();
 
     //jumping
-    if(spacePressed && jerryFig.jumping === false){
+    if (jerryFig.spacePressed && jerryFig.jumping === false){
       jerryFig.y_velocity -=35;
       jerryFig.jumping = true;
     }
 
-    if (leftPressed && jerryFig.x >= 100){
+    if (jerryFig.leftPressed && jerryFig.x >= 100){
       jerryFig.x_velocity -= 0.5;
     }
 
-    if (rightPressed && jerryFig.x <= 700){
+    if (jerryFig.rightPressed && jerryFig.x <= 700){
       jerryFig.x_velocity += 0.5;
     }
 

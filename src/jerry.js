@@ -8,6 +8,16 @@ class Jerry {
     this.y = y;
     this.y_velocity = y_velocity;
     this.x_velocity = x_velocity;
+    this.leftPressed = false;
+    this.rightPressed = false;
+    this.spacePressed = false;
+  }
+
+  restartJer(){
+    this.x_velocity = 0;
+    this.x = 150;
+    this.leftPressed = false;
+    this.rightPressed = false;
   }
 }
 
