@@ -31,7 +31,11 @@ export let coneOne = new GameObjects(
 )
 
 export  let musicNoteOne = new GameObjects(
-
+  500,
+  500,
+  Math.floor(Math.random() * ((350) - 150) + 150),
+  -4,
+  50,
+  25
 )
 
-// export default trashCanOne;

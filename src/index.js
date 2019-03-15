@@ -1,5 +1,5 @@
 import jerryFig from './jerry';
-import {trashCanOne, coneOne } from './object';
+import { trashCanOne, coneOne, musicNoteOne} from './object';
 
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -24,16 +24,6 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   //main figure
 
-  // let jerryFig = {
-  //   height: 100,
-  //   jumping: true,
-  //   width: 80,
-  //   x: 150,
-  //   x_velocity: 0,
-  //   y: 200,
-  //   y_velocity: 0
-  // }
-
 
 
   const jerry = new Image();
@@ -46,31 +36,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   //trash figure
-  // let trashStart = canvas.width-50
-  // let trashCanOne.posX = trashCanOne.start;   
-  // let trashCanOne.posY = canvas.height-50; 
-  // let trashCanOne.speed = -5;             
+             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
 
 
   //cone figure
-  // let coneOne.start = canvas.width+220
-  // let coneOne.posX = coneOne.start;
-  // let coneOne.posY = canvas.height - 50;
-  // let coneOne.speed = -5;
+ 
   const cone = new Image();
   cone.src = 'assets/images/cone.png'
 
   //music figure
 
-  let musicNote1 = {
-    height:50,
-    width: 25,
-    x: 800,
-    y: Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150),
-    speed: -4
-  }
+  
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
 
@@ -128,10 +106,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
 
-  function restartMusicNote1(){
+  function restartmusicNoteOne(){
    
-    musicNote1.x = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
-    musicNote1.y = Math.floor(Math.random() * (375 - 250) + 100)
+    musicNoteOne.posX = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
+    musicNoteOne.posY = Math.floor(Math.random() * (375 - 250) + 100)
     }
 
   function restartMusicNote3() {
@@ -181,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     coneOne.speed = -4
     restartJer();
     gameOverObs();
-    restartMusicNote1();
+    restartmusicNoteOne();
     restartMusicNote2();
     restartMusicNote3();
     
@@ -268,10 +246,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   // collision
   function jerryHitNote1(){  
-    if (((musicNote1.x >= jerryFig.x - 30 && musicNote1.x-20 <= jerryFig.x + 40) && (musicNote1.y+20 >= jerryFig.y && musicNote1.y+15 < jerryFig.y + 100)) || (musicNote1.x === jerryFig.x + 50 && (musicNote1.y > jerryFig.y && musicNote1.y < jerryFig.y + 100))) {
+    if (((musicNoteOne.posX >= jerryFig.x - 30 && musicNoteOne.posX - 20 <= jerryFig.x + 40) && (musicNoteOne.posY + 20 >= jerryFig.y && musicNoteOne.posY + 15 < jerryFig.y + 100)) || (musicNoteOne.posX === jerryFig.x + 50 && (musicNoteOne.posY > jerryFig.y && musicNoteOne.posY < jerryFig.y + 100))) {
       score += 5
-      musicNote1.x = Math.floor(Math.random() * (1000 - canvas.width) + canvas.width);
-      musicNote1.y = Math.floor(Math.random() * (300 - 100) + 100)
+      musicNoteOne.posX = Math.floor(Math.random() * (1000 - canvas.width) + canvas.width);
+      musicNoteOne.posY = Math.floor(Math.random() * (300 - 100) + 100)
     } 
   }
 
@@ -396,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     
      
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
-    ctx.drawImage(musicNote, musicNote1.x, musicNote1.y,musicNote1.width, musicNote1.height)
+    ctx.drawImage(musicNote, musicNoteOne.posX, musicNoteOne.posY, musicNoteOne.width, musicNoteOne.height)
     ctx.drawImage(musicNote2img, musicNote2.x, musicNote2.y, musicNote2.width, musicNote2.height)
     ctx.drawImage(musicNote3Img, musicNote3.x, musicNote3.y, musicNote3.width, musicNote3.height)
     
@@ -420,14 +398,14 @@ document.addEventListener("DOMContentLoaded", () =>{
     scoreIncreaseSpeed();
     trashCanOne.posX+= trashCanOne.speed
     coneOne.posX += coneOne.speed;
-    musicNote1.x += musicNote1.speed;
+    musicNoteOne.posX += musicNoteOne.speed;
     musicNote3.x += musicNote3.speed;
     music2Move();
     
     
     
     if(trashCanOne.posX < 0){restartTrash();}
-    if (musicNote1.x < 0) { restartMusicNote1()}
+    if (musicNoteOne.posX < 0) { restartmusicNoteOne()}
     if(musicNote2.x < 0){restartMusicNote2()}
     if (musicNote3.x < 0) { restartMusicNote3() }
     if (coneOne.posX < 0) { restartCone() }
