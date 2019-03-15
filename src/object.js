@@ -30,7 +30,7 @@ export let coneOne = new GameObjects(
   50
 )
 
-export  let musicNoteOne = new GameObjects(
+export let musicNoteOne = new GameObjects(
   500,
   500,
   Math.floor(Math.random() * ((350) - 150) + 150),
@@ -38,4 +38,25 @@ export  let musicNoteOne = new GameObjects(
   50,
   25
 )
+
+
+export let musicNoteTwo = new GameObjects(
+  500,
+  700,
+  Math.floor(Math.random() * ((350) - 150) + 150),
+  -4,
+  50,
+  25
+)
+
+export let musicNoteThree = new GameObjects(
+  500,
+  950,
+  Math.floor(Math.random() * ((350) - 150) + 150),
+  -4,
+  50,
+  25
+)
+
+
 
