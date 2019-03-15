@@ -57,17 +57,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   const musicNote3Img = new Image();
   musicNote3Img.src = 'assets/images/music1.png'
 
-  //music2 figure
-  // Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150)
-  // let musicNote2 = {
-  //   height: 50,
-  //   width: 25,
-  //   x: 700,
-  //   x_velocity: 0,
-  //   y: Math.floor(Math.random() * ((canvas.height - 50) - 150) + 150),
-  //   y_velocity: 0,
-  //   speed: -4
-  // }
+ 
 
   const musicNote2img = new Image();
   musicNote2img.src = 'assets/images/music2.png'
@@ -83,53 +73,32 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   }
 
-  //for tire -- add bounce colision
-  // function music2Move() {
-  //   musicNote2.x += musicNote2.speed;
-  //   // musicNote2.y += Math.floor(Math.random() * (20 - 10) + 10)
-  //   // musicNote2.y -= Math.floor(Math.random() * (20 - 10) + 10)
-  //   musicNote2.y_velocity += 1.5;
-  //   musicNote2.x += musicNote2.x_velocity;
-  //   musicNote2.y += musicNote2.y_velocity;
-  //   musicNote2.x_velocity *= 0.9;
-  //   musicNote2.y_velocity *= 0.9;
-  //   musicNote2.y -= musicNote2.y_velocity;
 
 
+
+
+  // function restartmusicNoteOne(){
+   
+  //   musicNoteOne.posX = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
+  //   musicNoteOne.posY = Math.floor(Math.random() * (375 - 250) + 100)
+  //   }
+
+  // function restartmusicNoteThree() {
+
+  //   musicNoteThree.posX = Math.floor(Math.random() * (1300 - canvas.width+75) + canvas.width+75);
+  //   musicNoteThree.posY = Math.floor(Math.random() * (375 - 250) + 100)
   // }
 
 
+  // function restartmusicNoteTwo() {
 
-  function restartmusicNoteOne(){
-   
-    musicNoteOne.posX = Math.floor(Math.random() * (1300 - canvas.width) + canvas.width);
-    musicNoteOne.posY = Math.floor(Math.random() * (375 - 250) + 100)
-    }
-
-  function restartmusicNoteThree() {
-
-    musicNoteThree.posX = Math.floor(Math.random() * (1300 - canvas.width+75) + canvas.width+75);
-    musicNoteThree.posY = Math.floor(Math.random() * (375 - 250) + 100)
-  }
-
-
-  function restartmusicNoteTwo() {
-
-    musicNoteTwo.posX = Math.floor(Math.random() * (1300 - canvas.width+125) + canvas.width+125)
-    musicNoteTwo.posY = Math.floor(Math.random() * (375 - 250) + 100)
+  //   musicNoteTwo.posX = Math.floor(Math.random() * (1300 - canvas.width+125) + canvas.width+125)
+  //   musicNoteTwo.posY = Math.floor(Math.random() * (375 - 250) + 100)
     
 
-  }
+  // }
   
-  function restartTrash(){
-    trashCanOne.posX = Math.floor(Math.random() * (1500 - 780) + 780)   //random
   
-  }
-  
-  function restartCone() {
-    coneOne.posX = Math.floor(Math.random() * (1300 - 780) + 780)  
-    
-  }
 
 
   function gameOverObs(){
@@ -153,9 +122,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     coneOne.speed = -4
     restartJer();
     gameOverObs();
-    restartmusicNoteOne();
-    restartmusicNoteTwo();
-    restartmusicNoteThree();
+    musicNoteOne.restartMusicNote();
+    musicNoteTwo.restartMusicNote();
+    musicNoteThree.restartMusicNote();
+    
     
    
     
@@ -398,11 +368,11 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     
-    if(trashCanOne.posX < 0){restartTrash();}
-    if (musicNoteOne.posX < 0) { restartmusicNoteOne()}
-    if (musicNoteTwo.posX < 0) { restartmusicNoteTwo()}
-    if (musicNoteThree.posX < 0) { restartmusicNoteThree() }
-    if (coneOne.posX < 0) { restartCone() }
+    if (trashCanOne.posX < 0) {trashCanOne.restartTrash();}
+    if (musicNoteOne.posX < 0) { musicNoteOne.restartMusicNote()}
+    if (musicNoteTwo.posX < 0) { musicNoteTwo.restartMusicNote()}
+    if (musicNoteThree.posX < 0) { musicNoteThree.restartMusicNote() }
+    if (coneOne.posX < 0) { coneOne.restartCone() }
   
 
     
@@ -469,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if(e.keyCode === 13){
       if (paused) {
 
-        // requestAnimationFrame(draw);
+        
         draw()
         paused = false;
       
@@ -480,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         gameOver = false;
         draw()
         begin = false;
-        audio.play()
+        // audio.play()   TURN BACK ON
         music_play = true
         
       } else if (gameOver) {
@@ -488,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         gameOver = false;
         draw()
         begin = false;
-        audio.play()
+        // audio.play()  TURN BACK ON
         music_play = true
       }
     }
