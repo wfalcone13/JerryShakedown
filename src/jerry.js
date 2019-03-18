@@ -1,4 +1,7 @@
 
+
+
+
 class Jerry {
   constructor(height, width, x, y, x_velocity, y_velocity){
     this.height = height;
@@ -21,7 +24,7 @@ class Jerry {
   }
 }
 
-let jerryFig =  new Jerry(
+export let jerryFig =  new Jerry(
   100,
   80,
   150,
@@ -32,6 +35,8 @@ let jerryFig =  new Jerry(
 
 const jerry = new Image();
 jerry.src = 'assets/images/jerr3.png';
+
+
 
 
 export default jerryFig
