@@ -1,6 +1,7 @@
 import jerryFig from './jerry';
 import { trashCanOne, coneOne, musicNoteOne, musicNoteThree, musicNoteTwo} from './object';
-import { music2Move, restartObjs, resestSpeed, jerryHitNote1, jerryHitNote2, jerryHitNote3, trashHitJerry, coneHitJerry} from './game_moves'
+import { music2Move, resestSpeed, jerryHitNote1, jerryHitNote2, jerryHitNote3, 
+        trashHitJerry, coneHitJerry, scoreIncreaseSpeed} from './game_moves'
 import {newGame} from './game';
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -8,48 +9,26 @@ document.addEventListener("DOMContentLoaded", () =>{
   let ctx = canvas.getContext('2d');
   let id;
 
-
-  
-
-
-
   const jerry = new Image();
   jerry.src ='assets/images/jerr3.png';
 
-
-
-  //trash figure
-             
+  //trash figure             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
 
-
-  //cone figure
- 
+  //cone figure 
   const cone = new Image();
   cone.src = 'assets/images/cone.png'
 
   //music figure
-
-  
   const musicNote = new Image();
   musicNote.src ='assets/images/music1.png'
-
-
   
   const musicNote3Img = new Image();
   musicNote3Img.src = 'assets/images/music1.png'
-
  
-
   const musicNote2img = new Image();
   musicNote2img.src = 'assets/images/music2.png'
-
-
-  // movement functions
-
- 
-  
 
 
   function scorePlus(){
@@ -58,19 +37,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     } 
   }
 
- 
   function increaseScore(){
+    debugger
     setInterval(scorePlus, 500)
   }
-
-  
-
-
-
-
-  
-
-  
 
   document.addEventListener("keydown", keyDownHander, false);
   document.addEventListener("keyup", keyUpHander, false);
@@ -96,9 +66,6 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
 
-
-
-
   function drawScore(){
     ctx.font ='20px Staatliches';
     ctx.fillStyle = "black";
@@ -121,45 +88,20 @@ document.addEventListener("DOMContentLoaded", () =>{
     
   }
 
- 
-
 
   function lost(){
     if (newGame.gameOver){
       cancelAnimationFrame(id);
       resestSpeed();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawGameDone()
-    
-   
+      drawGameDone() 
     }
   }
-
-  function scoreIncreaseSpeed(){
-    if (newGame.score >= 600){
-        trashCanOne.speed = -10;
-        coneOne.speed = -10;
-    } else if (newGame.score >= 400){
-        trashCanOne.speed = -9;
-        coneOne.speed = -9;
-    } else if (newGame.score >= 150) {
-        trashCanOne.speed = -8;
-        coneOne.speed = -8;
-    } else if (newGame.score >= 100){
-      coneOne.speed = -7
-      trashCanOne.speed = -7
-    } else if (newGame.score >= 50) {
-      coneOne.speed = -6
-      trashCanOne.speed = -6
-    }
-  } 
 
 
   
   function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
     //road
     ctx.strokeStyle = "gray";
     ctx.lineWidth = 8;
@@ -212,11 +154,6 @@ document.addEventListener("DOMContentLoaded", () =>{
     trashHitJerry(); 
     coneHitJerry();
  
-
-
-    
-    
-    //ball moving
     scoreIncreaseSpeed();
     trashCanOne.posX+= trashCanOne.speed
     coneOne.posX += coneOne.speed;
@@ -224,70 +161,54 @@ document.addEventListener("DOMContentLoaded", () =>{
     musicNoteThree.posX += musicNoteThree.speed;
     music2Move();
     
-    
-    
     if (trashCanOne.posX < 0) {trashCanOne.restartTrash();}
     if (musicNoteOne.posX < 0) { musicNoteOne.restartMusicNote()}
     if (musicNoteTwo.posX < 0) { musicNoteTwo.restartMusicNote()}
     if (musicNoteThree.posX < 0) { musicNoteThree.restartMusicNote() }
     if (coneOne.posX < 0) { coneOne.restartCone() }
-  
-
-    
-    
+   
     id = requestAnimationFrame(draw)
    
         
-  lost()      
+    lost()      
   }
       
       // draw()
-      increaseScore();
-      
+    increaseScore();
+    lost();
 
-      lost();
-
-    
-      let music_play;
-    
-     
+    let music_play;     
 
 
   if (newGame.begin){
         beginGameScreen()
       }
 
-      const start = document.getElementById('start')
-      start.addEventListener('click', () => {
+    const start = document.getElementById('start')
+    start.addEventListener('click', () => {
+      
+      if (newGame.paused){
+        draw()
+        newGame.paused = false;
         
-        if (newGame.paused){
-          
-          // requestAnimationFrame(draw);
-          draw()
-          newGame.paused = false;
-          
-          
-          
-        } else if (newGame.begin){
-          
-          newGame.score = 0;
-          newGame.gameOver = false;
-          draw()
-          newGame.begin = false;
-          audio.play()
-          music_play = true
-          
-         
-        } else if (newGame.gameOver) {
-          newGame.score = 0;
-          newGame.gameOver = false;
-          draw()
-          newGame.begin = false;
-          audio.play()
-          music_play = true 
-       }
+      } else if (newGame.begin){
+        newGame.score = 0;
+        newGame.gameOver = false;
+        draw()
+        newGame.begin = false;
+        audio.play()
+        music_play = true
         
-      })
+      } else if (newGame.gameOver) {
+        newGame.score = 0;
+        newGame.gameOver = false;
+        draw()
+        newGame.begin = false;
+        audio.play()
+        music_play = true 
+      }
+      
+     })
       
 
   document.addEventListener("keydown", enterStart, false);
@@ -296,28 +217,24 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     if(e.keyCode === 13){
       if (newGame.paused) {
-
-        
         draw()
         newGame.paused = false;
-      
-
 
       } else if (newGame.begin) {
         newGame.score = 0;
         newGame.gameOver = false;
         draw()
         newGame.begin = false;
-        // audio.play()   TURN BACK ON
+        audio.play()  // TURN BACK ON
         music_play = true
-        
+
       } else if (newGame.gameOver) {
         newGame.score = 0;
         newGame.gameOver = false;
         draw()
         newGame.begin = false;
-        // audio.play()  TURN BACK ON
-        music_play = true
+        // audio.play()  //leave off so it goes with game play
+        // music_play = true
       }
     }
   }
@@ -332,8 +249,6 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGame.paused = true
         pText.innerText = "paused"
       } else if (newGame.paused) {
-
-        // requestAnimationFrame(draw);
         draw()
         newGame.paused = false;
         pText.innerText = "pause"
@@ -384,8 +299,6 @@ document.addEventListener("DOMContentLoaded", () =>{
         audio.play();
         music_play = !music_play
         music.innerText = 'Music Off'
-
-
       }
     }
   }

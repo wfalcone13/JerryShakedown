@@ -80,3 +80,24 @@ export function coneHitJerry() {
     newGame.gameOver = true
   }
 }
+
+
+export function scoreIncreaseSpeed() {
+  if (newGame.score >= 600) {
+    trashCanOne.speed = -10;
+    coneOne.speed = -10;
+  } else if (newGame.score >= 400) {
+    trashCanOne.speed = -9;
+    coneOne.speed = -9;
+  } else if (newGame.score >= 150) {
+    trashCanOne.speed = -8;
+    coneOne.speed = -8;
+  } else if (newGame.score >= 100) {
+    coneOne.speed = -7
+    trashCanOne.speed = -7
+  } else if (newGame.score >= 50) {
+    coneOne.speed = -6
+    trashCanOne.speed = -6
+  }
+} 
+
