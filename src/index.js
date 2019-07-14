@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function increaseScore(){
-    debugger
+    
     setInterval(scorePlus, 500)
   }
 

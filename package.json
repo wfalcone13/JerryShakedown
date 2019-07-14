@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/wfalcone13/JerryShakedown#readme",
   "dependencies": {
+    "firebase": "^6.3.0",
     "gh-pages": "^2.0.1",
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.3"
