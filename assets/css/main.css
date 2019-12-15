@@ -120,12 +120,13 @@ body{
 
 
 #scoreb{
-  border: 2px solid red;
-  height: 395px;
+  border: 2px solid black;
+  height: 331px;
   width: 147px;
   margin-top: 5px;
   margin-right: 10px;
   font-family: 'Staatliches', cursive;
+  background: rgba(255,255,255,0.5);
 }
 
 #scoreb p{
@@ -134,11 +135,12 @@ body{
 
 #name-id{
   height: 22px;
-    width: 100px;
-    position: absolute;
-    margin-top: 175px;
-    background: none;
-    border: 3px solid black;
+  width: 100px;
+  position: absolute;
+  margin-top: 175px;
+  background: none;
+  border: 3px solid black;
+  font-family: 'Staatliches', cursive;
 }
 
 #butt-name{
