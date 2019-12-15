@@ -50,16 +50,15 @@ document.addEventListener("DOMContentLoaded", () =>{
   musicNote2img.src = 'assets/images/music2.png'
 
 
-  function scorePlus(){
-    if (!newGame.paused){
-    newGame.score+=1
-    } 
-  }
 
-  function increaseScore(){
-    
-    setInterval(scorePlus, 500)
+
+  function scorePlus(){ 
+      newGame.score+=1
   }
+ 
+  setInterval(scorePlus, 500)
+
+
 
   document.addEventListener("keydown", keyDownHander, false);
   document.addEventListener("keyup", keyUpHander, false);
@@ -99,10 +98,12 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Hit Enter to try again", 200, 250 )
   }
 
+  let finalScore;
   function enterName(){
     ctx.font = '30px Staatliches';
     ctx.fillStyle = "black";
     ctx.fillText("New High Score: " + newGame.score, 200, 150)
+    finalScore = newGame.score
     ctx.fillText("Enter Name", 200, 200)
     let name = document.createElement("input")
     name.setAttribute("id", "name-id")
@@ -119,12 +120,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   }
 
+  function newAfterHS(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '30px Staatliches';
+    ctx.fillStyle = "black";
+    ctx.fillText("Hit Enter to go again", 200, 200)
+
+  }
+
   function beginGameScreen(){
     
     ctx.font = '30px Staatliches';
     ctx.fillStyle = "black";
     ctx.fillText("Press Enter to start", 300,200)
-    
   }
 
   //check if the score is a top 10
@@ -132,14 +140,46 @@ document.addEventListener("DOMContentLoaded", () =>{
   //check the db if its higher than the lowest score
 
   function isHighScore(){
-    db.collection("scores").orderBy("score", "desc").limit(5).get().then((snapshot) => {
-      //if no scores - add the score
-      if(snapshot.doc === undefined){
+    
+    let score = newGame.score;
+    db.collection("scores").orderBy("score", "desc").limit(10).get().then((snapshot) => {
+      let lastHighScore = snapshot.docs.pop().data().score;
+      
+      if (score > lastHighScore){
         enterName()
+        let button = document.getElementById("butt-name")
+        button.addEventListener("click", enterScore)
       } else {
         drawGameDone()
       }
     })
+  }
+
+  function enterScore(){
+    let name = document.getElementById("name-id").value;
+    let score = finalScore;
+     
+    if (name !== "") {
+     
+      // Add a new document in collection "scores"
+      db.collection("scores").doc().set({
+        name: name,
+        score: score
+      })
+        .then(function () {
+          console.log("Document successfully written!");
+          updateScores();
+          removeEnterNodes()
+          newAfterHS()
+          
+        })
+        .catch(function (error) {
+          console.error("Error writing document: ", error);
+        });
+    } else {
+      alert('Please enter a name');
+    }
+
   }
   
 
@@ -229,7 +269,9 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
       
       // draw()
-    increaseScore();
+  
+    // increaseScore();
+  
     lost();
 
     let music_play;     
@@ -251,6 +293,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGame.gameOver = false;
         draw()
         newGame.begin = false;
+        
         audio.play()
         music_play = true
         
@@ -261,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGame.begin = false;
         audio.play()
         music_play = true 
+        
       }
       
      })
@@ -286,7 +330,6 @@ document.addEventListener("DOMContentLoaded", () =>{
       } else if (newGame.gameOver) {
         newGame.score = 0;
         newGame.gameOver = false;
-        removeEnterNodes()
         draw()
         newGame.begin = false;
         // audio.play()  //leave off so it goes with game play
@@ -314,11 +357,14 @@ document.addEventListener("DOMContentLoaded", () =>{
         cancelAnimationFrame(id);
         newGame.paused = true
         pText.innerText = "paused"
+        finalScore = newGame.score
+
       } else if (newGame.paused) {
         draw()
         newGame.paused = false;
         pText.innerText = "pause"
-
+        newGame.score = finalScore
+        
       }
     }
   }
@@ -369,6 +415,22 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
       
+  function updateScores() {
+    // Clear current scores in our scoreboard
+    document.getElementById('scoreboard').innerHTML = '<tr><th>Name</th><th>Score</th></tr>';
+
+    // Get the top 5 scores from our scoreboard
+    db.collection("scores").orderBy("score", "desc").limit(10).get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        document.getElementById('scoreboard').innerHTML += '<tr>' +
+          '<td>' + doc.data().name + '</td>' +
+          '<td>' + doc.data().score + '</td>' +
+          '</tr>';
+      })
+    })
+  }
+
+  window.onload = updateScores();
       
 })
 
