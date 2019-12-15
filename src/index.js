@@ -3,8 +3,27 @@ import { trashCanOne, coneOne, musicNoteOne, musicNoteThree, musicNoteTwo} from 
 import { music2Move, resestSpeed, jerryHitNote1, jerryHitNote2, jerryHitNote3, 
         trashHitJerry, coneHitJerry, scoreIncreaseSpeed} from './game_moves'
 import {newGame} from './game';
+// import * as firebase from "firebase/app";
+// import "firebase/database";
+// import "" from 'firebase/database';
+
 
 document.addEventListener("DOMContentLoaded", () =>{
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyD8Y8oW1J4VAZhkhaAIX_pknRCZKhSrLMI",
+    authDomain: "jerry-run-a963a.firebaseapp.com",
+    databaseURL: "https://jerry-run-a963a.firebaseio.com",
+    projectId: "jerry-run-a963a",
+    storageBucket: "jerry-run-a963a.appspot.com",
+    messagingSenderId: "401633777554",
+    appId: "1:401633777554:web:1429a68ffc872204"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var db = firebase.firestore();
+
   let canvas = document.getElementById("game-canvas")
   let ctx = canvas.getContext('2d');
   let id;
@@ -80,6 +99,26 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Hit Enter to try again", 200, 250 )
   }
 
+  function enterName(){
+    ctx.font = '30px Staatliches';
+    ctx.fillStyle = "black";
+    ctx.fillText("New High Score: " + newGame.score, 200, 150)
+    ctx.fillText("Enter Name", 200, 200)
+    let name = document.createElement("input")
+    name.setAttribute("id", "name-id")
+    name.autofocus = true;
+
+    let butt = document.createElement("button")
+    butt.setAttribute("id", "butt-name")
+    butt.innerText = "submit"
+    
+    let b = document.getElementsByClassName("board")[0];
+    b.appendChild(name)
+
+    b.appendChild(butt)
+
+  }
+
   function beginGameScreen(){
     
     ctx.font = '30px Staatliches';
@@ -88,13 +127,29 @@ document.addEventListener("DOMContentLoaded", () =>{
     
   }
 
+  //check if the score is a top 10
+  //grab the score
+  //check the db if its higher than the lowest score
+
+  function isHighScore(){
+    db.collection("scores").orderBy("score", "desc").limit(5).get().then((snapshot) => {
+      //if no scores - add the score
+      if(snapshot.doc === undefined){
+        enterName()
+      } else {
+        drawGameDone()
+      }
+    })
+  }
+  
 
   function lost(){
     if (newGame.gameOver){
       cancelAnimationFrame(id);
       resestSpeed();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawGameDone() 
+      // drawGameDone() 
+      isHighScore()
     }
   }
 
@@ -231,12 +286,23 @@ document.addEventListener("DOMContentLoaded", () =>{
       } else if (newGame.gameOver) {
         newGame.score = 0;
         newGame.gameOver = false;
+        removeEnterNodes()
         draw()
         newGame.begin = false;
         // audio.play()  //leave off so it goes with game play
         // music_play = true
       }
     }
+  }
+
+  function removeEnterNodes(){
+    let node = document.getElementsByClassName("board")[0];
+
+    let enter = node.childNodes[3];
+    let sub = node.childNodes[4];
+
+    node.removeChild(enter);
+    node.removeChild(sub)
   }
 
 // Pause Functions

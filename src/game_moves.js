@@ -2,6 +2,7 @@ import { trashCanOne, coneOne, musicNoteOne, musicNoteThree, musicNoteTwo } from
 import jerryFig from './jerry';
 import {newGame} from './game'
 
+
 export function music2Move() {
   musicNoteTwo.posX += musicNoteTwo.speed;
   musicNoteTwo.posY += Math.floor(Math.random() * (20 - 10) + 10)

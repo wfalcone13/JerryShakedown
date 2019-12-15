@@ -10,7 +10,8 @@
   <title>Get Jerry Through Shakedown</title>
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
-  <!-- <script src="main.js"></script> -->
+  <script src="./src/score.js"></script>
+
 </head>
 <body>
 
@@ -26,10 +27,14 @@
   </div>
 
   <div class="middle-page">
+  <div id='scoreb'>
+    <p>Top Scores</p>
+  </div>
 
   <div class="board"> 
     <canvas id="game-canvas" width="800" height="400"></canvas>
   </div>
+
 
   <div class="instructions-box">
     <div class="instructions">
@@ -87,13 +92,16 @@
   </script>
 
 
+
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script> -->
+<!-- <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script> -->
+<!-- <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script> -->
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
 
-<script>
+<!-- <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyD8Y8oW1J4VAZhkhaAIX_pknRCZKhSrLMI",
@@ -106,7 +114,14 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-</script>
 
+  var database = firebase.database();
+</script> -->
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+<!-- Import Firestore -->
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+<!-- Import our JavaScript file -->
 </body>
 </html>

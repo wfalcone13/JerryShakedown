@@ -38,7 +38,6 @@ body{
 .board{
   display: flex;
   justify-content: center;
-  margin-left: 230px;
   margin-top: 5px;
 }
 
@@ -117,4 +116,39 @@ body{
 
 #player{
   /* display: none; */
+}
+
+
+#scoreb{
+  border: 2px solid red;
+  height: 395px;
+  width: 147px;
+  margin-top: 5px;
+  margin-right: 10px;
+  font-family: 'Staatliches', cursive;
+}
+
+#scoreb p{
+  margin-left: 25px;
+}
+
+#name-id{
+  height: 22px;
+    width: 100px;
+    position: absolute;
+    margin-top: 175px;
+    background: none;
+    border: 3px solid black;
+}
+
+#butt-name{
+      position: absolute;
+    height: 26px;
+    width: 50px;
+    margin-left: 100px;
+    margin-top: 177px;
+    background: none;
+    border: 3px solid black;
+    border-radius: 6px;
+    font-family: 'Staatliches', cursive;
 }
