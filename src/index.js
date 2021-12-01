@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Enter Name", 200, 200)
     let name = document.createElement("input")
     name.setAttribute("id", "name-id")
+    name.setAttribute("maxlength","40")
     name.autofocus = true;
 
     let butt = document.createElement("button")
@@ -140,8 +141,8 @@ document.addEventListener("DOMContentLoaded", () =>{
   //check the db if its higher than the lowest score
 
   function isHighScore(){
-    
     let score = newGame.score;
+    
     db.collection("scores").orderBy("score", "desc").limit(10).get().then((snapshot) => {
       let lastHighScore = snapshot.docs.pop().data().score;
       
