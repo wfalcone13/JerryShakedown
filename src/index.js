@@ -107,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.fillText("Enter Name", 200, 200)
     let name = document.createElement("input")
     name.setAttribute("id", "name-id")
-    name.setAttribute("maxlength","40")
+    name.setAttribute('type', 'text')
+    name.setAttribute("maxlength",15)
     name.autofocus = true;
 
     let butt = document.createElement("button")
