@@ -3,3 +3,5 @@
  bundle.js
  bundle.js.map
 node_modules
+fb_config.js
+.DS_Store

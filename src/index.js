@@ -3,6 +3,7 @@ import { trashCanOne, coneOne, musicNoteOne, musicNoteThree, musicNoteTwo} from 
 import { music2Move, resestSpeed, jerryHitNote1, jerryHitNote2, jerryHitNote3, 
         trashHitJerry, coneHitJerry, scoreIncreaseSpeed} from './game_moves'
 import {newGame} from './game';
+import { f_config } from './fb_config'
 // import * as firebase from "firebase/app";
 // import "firebase/database";
 // import "" from 'firebase/database';
@@ -10,15 +11,7 @@ import {newGame} from './game';
 
 document.addEventListener("DOMContentLoaded", () =>{
   // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyD8Y8oW1J4VAZhkhaAIX_pknRCZKhSrLMI",
-    authDomain: "jerry-run-a963a.firebaseapp.com",
-    databaseURL: "https://jerry-run-a963a.firebaseio.com",
-    projectId: "jerry-run-a963a",
-    storageBucket: "jerry-run-a963a.appspot.com",
-    messagingSenderId: "401633777554",
-    appId: "1:401633777554:web:1429a68ffc872204"
-  };
+  var firebaseConfig = f_config;
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
