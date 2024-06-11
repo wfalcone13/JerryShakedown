@@ -24,7 +24,7 @@
     "firebase": "^6.6.2",
     "firebaseui": "^4.3.0",
     "gh-pages": "^2.0.1",
-    "webpack": "^4.29.2",
-    "webpack-cli": "^3.2.3"
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }
