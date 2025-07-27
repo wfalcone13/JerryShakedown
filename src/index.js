@@ -1,9 +1,31 @@
 import jerryFig from './jerry';
-import { trashCanOne, coneOne, musicNoteOne, musicNoteThree, musicNoteTwo} from './object';
-import { music2Move, resestSpeed, jerryHitNote1, jerryHitNote2, jerryHitNote3, 
-        trashHitJerry, coneHitJerry, scoreIncreaseSpeed} from './game_moves'
-import {newGame} from './game';
-import { f_config } from './fb_config'
+import { 
+  trashCanOne, 
+  coneOne, 
+  musicNoteOne, 
+  musicNoteThree, 
+  musicNoteTwo,
+  invinciblePowerUp,
+  doubleJumpPowerUp,
+  speedBoostPowerUp
+} from './object';
+import { 
+  music2Move, 
+  resestSpeed, 
+  jerryHitNote1, 
+  jerryHitNote2, 
+  jerryHitNote3, 
+  trashHitJerry, 
+  coneHitJerry, 
+  scoreIncreaseSpeed,
+  updateGameObjects,
+  checkMusicNoteCollisions,
+  checkPowerUpCollisions,
+  checkObstacleCollisions,
+  updateObjectSpeeds
+} from './game_moves';
+import { newGame } from './game';
+import { f_config } from './fb_config';
 // import * as firebase from "firebase/app";
 // import "firebase/database";
 // import "" from 'firebase/database';
@@ -17,51 +39,52 @@ document.addEventListener("DOMContentLoaded", () =>{
 
   var db = firebase.firestore();
 
-  let canvas = document.getElementById("game-canvas")
+  let canvas = document.getElementById("game-canvas");
   let ctx = canvas.getContext('2d');
   let id;
 
+  // Load images
   const jerry = new Image();
-  jerry.src ='assets/images/jerr3.png';
+  jerry.src = 'assets/images/jerr3.png';
 
-  //trash figure             
   const trash = new Image();
   trash.src = 'assets/images/trash.png';
 
-  //cone figure 
   const cone = new Image();
-  cone.src = 'assets/images/cone.png'
+  cone.src = 'assets/images/cone.png';
 
-  //music figure
   const musicNote = new Image();
-  musicNote.src ='assets/images/music1.png'
+  musicNote.src = 'assets/images/music1.png';
   
   const musicNote3Img = new Image();
-  musicNote3Img.src = 'assets/images/music1.png'
+  musicNote3Img.src = 'assets/images/music1.png';
  
   const musicNote2img = new Image();
-  musicNote2img.src = 'assets/images/music2.png'
+  musicNote2img.src = 'assets/images/music2.png';
 
+  // Power-up images (using existing images for now)
+  const powerUpImg = new Image();
+  powerUpImg.src = 'assets/images/music2.png'; // Using music note as power-up placeholder
 
-
-
-  function scorePlus(){ 
-      newGame.score+=1
+  // Score increment
+  function scorePlus() { 
+    if (!newGame.paused && !newGame.gameOver && !newGame.begin) {
+      newGame.score += 1;
+    }
   }
  
-  setInterval(scorePlus, 500)
+  setInterval(scorePlus, 500);
 
-
-
+  // Enhanced input handling
   document.addEventListener("keydown", keyDownHander, false);
   document.addEventListener("keyup", keyUpHander, false);
 
-  function keyDownHander(e){
-    if (e.keyCode === 32){
+  function keyDownHander(e) {
+    if (e.keyCode === 32) {
       jerryFig.spacePressed = true;
-    } else if (e.keyCode === 37){
+    } else if (e.keyCode === 37) {
       jerryFig.leftPressed = true;
-    } else if (e.keyCode === 39){
+    } else if (e.keyCode === 39) {
       jerryFig.rightPressed = true;
     }
   }
@@ -76,28 +99,56 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
   }
 
-
-  function drawScore(){
-    ctx.font ='20px Staatliches';
+  // Enhanced UI drawing functions
+  function drawScore() {
+    ctx.font = '20px Staatliches';
     ctx.fillStyle = "black";
-    ctx.fillText("Score: " +newGame.score, 100, 50)
+    ctx.fillText("Score: " + newGame.score, 100, 50);
+    
+    // Draw lives
+    ctx.fillText("Lives: " + newGame.lives, 100, 80);
+    
+    // Draw level
+    ctx.fillText("Level: " + newGame.level, 100, 110);
+  }
+
+  function drawPowerUpStatus() {
+    const powerUps = newGame.powerUps;
+    let yPos = 140;
+    
+    if (powerUps.invincible) {
+      ctx.fillStyle = "gold";
+      ctx.fillText("INVINCIBLE!", 100, yPos);
+      yPos += 25;
+    }
+    
+    if (powerUps.doubleJump) {
+      ctx.fillStyle = "blue";
+      ctx.fillText("DOUBLE JUMP!", 100, yPos);
+      yPos += 25;
+    }
+    
+    if (powerUps.speedBoost) {
+      ctx.fillStyle = "green";
+      ctx.fillText("SPEED BOOST!", 100, yPos);
+    }
   }
 
   function drawGameDone() {
     ctx.font = '30px Staatliches';
     ctx.fillStyle = "black";
-    ctx.fillText("Score: " + newGame.score, 200, 150)
-    ctx.fillText("Game Over!", 200, 200)
-    ctx.fillText("Hit Enter to try again", 200, 250 )
+    ctx.fillText("Score: " + newGame.score, 200, 150);
+    ctx.fillText("Game Over!", 200, 200);
+    ctx.fillText("Hit Enter to try again", 200, 250);
   }
 
   let finalScore;
-  function enterName(){
+  function enterName() {
     ctx.font = '30px Staatliches';
     ctx.fillStyle = "black";
-    ctx.fillText("New High Score: " + newGame.score, 200, 150)
-    finalScore = newGame.score
-    ctx.fillText("Enter Name", 200, 200)
+    ctx.fillText("New High Score: " + newGame.score, 200, 150);
+    finalScore = newGame.score;
+    ctx.fillText("Enter Name", 200, 200);
     let name = document.createElement("input")
     name.setAttribute("id", "name-id")
     name.setAttribute('type', 'text')
@@ -155,7 +206,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     let score = finalScore;
      
     if (name !== "") {
-     
+      // Immediately remove the input elements to give user feedback
+      removeEnterNodes();
+      
       // Add a new document in collection "scores"
       db.collection("scores").doc().set({
         name: name,
@@ -164,17 +217,16 @@ document.addEventListener("DOMContentLoaded", () =>{
         .then(function () {
           console.log("Document successfully written!");
           updateScores();
-          removeEnterNodes()
-          newAfterHS()
-          
+          newAfterHS();
         })
         .catch(function (error) {
           console.error("Error writing document: ", error);
+          // If there's an error, show the input again
+          isHighScore();
         });
     } else {
       alert('Please enter a name');
     }
-
   }
   
 
@@ -190,9 +242,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   
-  function draw(){
+  function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //road
+    
+    // Draw road
     ctx.strokeStyle = "gray";
     ctx.lineWidth = 8;
     ctx.beginPath();
@@ -200,67 +253,83 @@ document.addEventListener("DOMContentLoaded", () =>{
     ctx.lineTo(800, 400);
     ctx.stroke();
 
-    //jumping
-    if (jerryFig.spacePressed && jerryFig.jumping === false){
-      jerryFig.y_velocity -=35;
-      jerryFig.jumping = true;
-    }
-
-    if (jerryFig.leftPressed && jerryFig.x >= 100){
-      jerryFig.x_velocity -= 0.5;
-    }
-
-    if (jerryFig.rightPressed && jerryFig.x <= 700){
-      jerryFig.x_velocity += 0.5;
-    }
-
-    jerryFig.y_velocity += 1.5;
-    jerryFig.x += jerryFig.x_velocity;
-    jerryFig.y += jerryFig.y_velocity;
-    jerryFig.x_velocity *= 0.9;
-    jerryFig.y_velocity *= 0.9;
-
-    if(jerryFig.y > canvas.height -100 ){
-      jerryFig.jumping = false;
-      jerryFig.y = 400-100;
-      jerryFig.y_velocity = 0;
-    }
+    // Update Jerry with new physics and power-ups
+    jerryFig.update(newGame);
     
-     
+    // Update all game objects
+    updateGameObjects();
+    
+    // Update power-ups
+    newGame.updatePowerUps();
+    
+    // Draw Jerry (with invincibility effect)
+    if (newGame.powerUps.invincible) {
+      ctx.globalAlpha = 0.7; // Make Jerry semi-transparent when invincible
+    }
     ctx.drawImage(jerry, jerryFig.x, jerryFig.y, jerryFig.width, jerryFig.height);
-    ctx.drawImage(musicNote, musicNoteOne.posX, musicNoteOne.posY, musicNoteOne.width, musicNoteOne.height)
-    ctx.drawImage(musicNote2img, musicNoteTwo.posX, musicNoteTwo.posY, musicNoteTwo.width, musicNoteTwo.height)
-    ctx.drawImage(musicNote3Img, musicNoteThree.posX, musicNoteThree.posY, musicNoteThree.width, musicNoteThree.height)
+    ctx.globalAlpha = 1.0; // Reset transparency
     
-    ctx.drawImage(trash, trashCanOne.posX, trashCanOne.posY, trashCanOne.height, trashCanOne.width);
-    ctx.drawImage(cone, coneOne.posX, coneOne.posY, coneOne.height, coneOne.width);
+    // Draw music notes
+    if (musicNoteOne.active && !musicNoteOne.collected) {
+      ctx.drawImage(musicNote, musicNoteOne.posX, musicNoteOne.posY, musicNoteOne.width, musicNoteOne.height);
+    }
+    if (musicNoteTwo.active && !musicNoteTwo.collected) {
+      ctx.drawImage(musicNote2img, musicNoteTwo.posX, musicNoteTwo.posY, musicNoteTwo.width, musicNoteTwo.height);
+    }
+    if (musicNoteThree.active && !musicNoteThree.collected) {
+      ctx.drawImage(musicNote3Img, musicNoteThree.posX, musicNoteThree.posY, musicNoteThree.width, musicNoteThree.height);
+    }
+    
+    // Draw obstacles
+    if (trashCanOne.active) {
+      ctx.drawImage(trash, trashCanOne.posX, trashCanOne.posY, trashCanOne.width, trashCanOne.height);
+    }
+    if (coneOne.active) {
+      ctx.drawImage(cone, coneOne.posX, coneOne.posY, coneOne.width, coneOne.height);
+    }
+    
+    // Draw power-ups
+    if (invinciblePowerUp.active && !invinciblePowerUp.collected) {
+      ctx.fillStyle = "gold";
+      ctx.globalAlpha = 0.8;
+      ctx.drawImage(powerUpImg, invinciblePowerUp.posX, invinciblePowerUp.posY, invinciblePowerUp.width, invinciblePowerUp.height);
+      ctx.globalAlpha = 1.0;
+    }
+    if (doubleJumpPowerUp.active && !doubleJumpPowerUp.collected) {
+      ctx.fillStyle = "blue";
+      ctx.globalAlpha = 0.8;
+      ctx.drawImage(powerUpImg, doubleJumpPowerUp.posX, doubleJumpPowerUp.posY, doubleJumpPowerUp.width, doubleJumpPowerUp.height);
+      ctx.globalAlpha = 1.0;
+    }
+    if (speedBoostPowerUp.active && !speedBoostPowerUp.collected) {
+      ctx.fillStyle = "green";
+      ctx.globalAlpha = 0.8;
+      ctx.drawImage(powerUpImg, speedBoostPowerUp.posX, speedBoostPowerUp.posY, speedBoostPowerUp.width, speedBoostPowerUp.height);
+      ctx.globalAlpha = 1.0;
+    }
 
-   
-
+    // Draw UI
     drawScore();
-    jerryHitNote1();
-    jerryHitNote2()
-    jerryHitNote3();
-    trashHitJerry(); 
-    coneHitJerry();
- 
-    scoreIncreaseSpeed();
-    trashCanOne.posX+= trashCanOne.speed
-    coneOne.posX += coneOne.speed;
-    musicNoteOne.posX += musicNoteOne.speed;
-    musicNoteThree.posX += musicNoteThree.speed;
-    music2Move();
+    drawPowerUpStatus();
     
-    if (trashCanOne.posX < 0) {trashCanOne.restartTrash();}
-    if (musicNoteOne.posX < 0) { musicNoteOne.restartMusicNote()}
-    if (musicNoteTwo.posX < 0) { musicNoteTwo.restartMusicNote()}
-    if (musicNoteThree.posX < 0) { musicNoteThree.restartMusicNote() }
-    if (coneOne.posX < 0) { coneOne.restartCone() }
-   
-    id = requestAnimationFrame(draw)
-   
-        
-    lost()      
+    // Enhanced collision detection
+    checkMusicNoteCollisions();
+    checkPowerUpCollisions();
+    checkObstacleCollisions();
+    
+    // Update object speeds based on difficulty
+    updateObjectSpeeds();
+    
+    // Legacy collision functions for backward compatibility (commented out to avoid conflicts)
+    // jerryHitNote1();
+    // jerryHitNote2();
+    // jerryHitNote3();
+    // trashHitJerry(); 
+    // coneHitJerry();
+    scoreIncreaseSpeed();
+    
+    id = requestAnimationFrame(draw);
+    lost();
   }
       
       // draw()
@@ -284,8 +353,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGame.paused = false;
         
       } else if (newGame.begin){
-        newGame.score = 0;
-        newGame.gameOver = false;
+        newGame.resetGame();
         draw()
         newGame.begin = false;
         
@@ -293,8 +361,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         music_play = true
         
       } else if (newGame.gameOver) {
-        newGame.score = 0;
-        newGame.gameOver = false;
+        newGame.resetGame();
         draw()
         newGame.begin = false;
         audio.play()
@@ -315,16 +382,14 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGame.paused = false;
 
       } else if (newGame.begin) {
-        newGame.score = 0;
-        newGame.gameOver = false;
+        newGame.resetGame();
         draw()
         newGame.begin = false;
         audio.play()  // TURN BACK ON
         music_play = true
 
       } else if (newGame.gameOver) {
-        newGame.score = 0;
-        newGame.gameOver = false;
+        newGame.resetGame();
         draw()
         newGame.begin = false;
         // audio.play()  //leave off so it goes with game play
@@ -334,13 +399,41 @@ document.addEventListener("DOMContentLoaded", () =>{
   }
 
   function removeEnterNodes(){
-    let node = document.getElementsByClassName("board")[0];
-
-    let enter = node.childNodes[3];
-    let sub = node.childNodes[4];
-
-    node.removeChild(enter);
-    node.removeChild(sub)
+    // Remove the name input field
+    const nameInput = document.getElementById("name-id");
+    if (nameInput) {
+      nameInput.remove();
+      console.log("Name input removed");
+    } else {
+      console.log("Name input not found");
+    }
+    
+    // Remove the submit button
+    const submitButton = document.getElementById("butt-name");
+    if (submitButton) {
+      submitButton.remove();
+      console.log("Submit button removed");
+    } else {
+      console.log("Submit button not found");
+    }
+    
+    // Also try to remove any elements with these classes as backup
+    const inputs = document.querySelectorAll('input[type="text"]');
+    const buttons = document.querySelectorAll('button');
+    
+    inputs.forEach(input => {
+      if (input.id === "name-id" || input.placeholder === "Enter name") {
+        input.remove();
+        console.log("Removed input by selector");
+      }
+    });
+    
+    buttons.forEach(button => {
+      if (button.id === "butt-name" || button.textContent === "submit") {
+        button.remove();
+        console.log("Removed button by selector");
+      }
+    });
   }
 
 // Pause Functions
